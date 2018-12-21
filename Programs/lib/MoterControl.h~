@@ -1,0 +1,17 @@
+#ifndef MoterControl_h
+#define MoterControl_h
+#include "arduino.h"
+
+class MoterControl
+{
+public:
+  MoterControl(void);
+  void moter_init(void);
+  void init(void);
+  uint16_t degtopos(uint16_t deg);
+  
+private:
+};
+
+extern MoterControl MC;
+#endif

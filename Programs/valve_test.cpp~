@@ -1,0 +1,59 @@
+
+#include <cstring>
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <stdint.h>
+#include <time.h>
+#include <sys/time.h>
+#include <wiringPiSPI.h>
+#include <wiringPi.h>
+#include <signal.h>
+#include <unistd.h>
+// original library
+#include "lib/initialization.h"
+#include "lib/motion.h"
+#include "lib/SPIM_Ras.h"
+#include "lib/SlaveControlCommand.h"
+#include "lib/OperationCommand.h"
+
+#define EXHAUST 0
+#define SUPPLY 1
+
+#define CS_VALVE 6
+
+struct itimerspec  itval1, itval5, itval10 ,itval100;
+struct sigevent se;
+struct sigaction sa;
+timer_t timerid_thread_1,timerid_thread_spi,timerid_thread;
+timer_t timerid_signal;
+
+void timerSetting(void);
+
+int count = 0;
+uint16_t valvepressure[2] = {600, 0};
+
+void handler_spi(void){
+  
+  SCC.transfer_volume_all_analog(CS_VALVE);
+  
+}
+
+void handler100(union sigval sv){
+  
+  printf("Target Valve value >> %d", valvepressure[count]);
+  count++; count %= 2;
+
+}
+
+
+int main(void){
+ 
+  // valve board are controlled in 16MHz
+  SPIR.initialization(16000000,800000);
+
+  SPIR.begin(CS_VALVE);
+
+  // start timer
+  timerSetting();
+}
