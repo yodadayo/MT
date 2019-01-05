@@ -20,9 +20,11 @@ void MoterControl::SerialInit(int serialport, int baudrate, const char *mode){
 void MoterControl::SendData(int serialport, uint8_t mnum){
 
   unsigned char buff[2] = {0, 0};
+  char *header, *footer;
+  strcpy(header, "H"); strcpy(footer, "F");
   
   for(int i=0; i<mnum; i++){
-    RS232_cputs(serialport, 'H'); // header
+    RS232_cputs(serialport, header); // header
     // if(RS232_SendByte(serialport, i+1 & 0xFF) < 0){ // sends the ID of the moter
     //   printf("failed\n");
     //   return ;
@@ -38,7 +40,7 @@ void MoterControl::SendData(int serialport, uint8_t mnum){
       printf("failed\n");
       return ;
     }
-    RS232_cputs(serialport, 'F'); // footer
+    RS232_cputs(serialport, footer); // footer
   }
 
 }
@@ -54,10 +56,12 @@ void MoterControl::moter_init(int serialport, uint8_t mnum){
     mWriteValue[i][1] = 200;
   }
 
-  DataSend(serialport, mnum);
+  SendData(serialport, mnum);
   
 }
 
 MoterControl::~MoterControl(void)
 {
 }
+
+MoterControl MC;

@@ -7,5 +7,5 @@ TASK = SAMPLE
 copy:
 		rsync -rvpu4 --exclude=".git",".DS_Store" $(HOST1)$(DEST)  /home/pi/MT
 
-main: ./MoterControl.cpp
-		g++ -o ./M_TEST ./MoterControl.cpp ./lib/SlaveControlCommand.cpp ./lib/OperationCommand.cpp ./lib/SPIM_Ras.cpp ./lib/rs232.cpp ./lib/MoterControl.cpp -l wiringPi -lrt -lbcm2835
+main: ./moter_test.cpp
+		g++ -o ./M_TEST ./moter_test.cpp ./lib/SlaveControlCommand.cpp ./lib/SPIM_Ras.cpp ./libdxl/DynamixelV2.cpp -l wiringPi -lrt -lbcm2835

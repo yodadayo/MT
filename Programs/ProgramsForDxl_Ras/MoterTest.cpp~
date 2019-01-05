@@ -1,0 +1,46 @@
+/*
+
+	compile with the command :
+g++ MoterTest.cpp ./libdynamixel/DynamixelV2.cpp
+
+*/
+
+#include "./libdynamixel/DynamixelV2.h"
+#include <stdio.h>
+// #include <iostream>
+#include <stdlib.h>
+#include <unistd.h>
+
+using namespace ssr::dynamixel;
+
+int main(void){
+
+	int position;
+	
+	DynamixelV2 m("/dev/ttyUSB0", 57600);
+	m.TorqueEnable(4);
+	usleep(1*1000*1000);
+	
+	position = 20;
+	// m.MovePosition(1,-position*4096/460+2048);
+	// usleep(1*1000*1000);
+	m.MovePosition(4,-position*4096/360+2048);
+	usleep(1*1000*1000);
+	
+	position = -20;
+	// m.MovePosition(1,-position*4096/460+2048);
+	// usleep(1*1000*1000);
+	m.MovePosition(4,-position*4096/360+2048);
+	usleep(1*1000*1000);
+	
+	position = 0;
+	// m.MovePosition(1,-position*4096/460+2048);
+	// usleep(1*1000*1000);
+	m.MovePosition(4,-position*4096/360+2048);
+	usleep(1*1000*1000);
+
+	m.TorqueDisable(4);
+	
+	return 0;
+}
+

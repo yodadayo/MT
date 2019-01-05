@@ -8,6 +8,8 @@
 			 
 #define SPI_SPEED 1000000
 #define FINT 500
+#define ID_MAX 4
+
 uint8_t SS[7]={SS_LEFT_BACK,SS_RIGHT_SIDE,SS_RIGHT_BACK,SS_LEFT_SIDE,4,6,7};
 volatile uint16_t analogL[24]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 volatile uint16_t analogR[24]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -26,6 +28,8 @@ volatile uint16_t R[24]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 volatile uint16_t vWriteValue[12]={0,0,0,0,0,0,0,0,0,0};
 volatile uint16_t vReadValue[12]={0,0,0,0,0,0,0,0,0,0};
+volatile int16_t mWriteValue[ID_MAX][2]={0};
+volatile int16_t mReadValue[ID_MAX][2]={0};
 
 int Rflag = 1;
 int readflag = -1;

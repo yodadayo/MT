@@ -43,8 +43,8 @@ extern uint16_t countinious_time;
 
 extern volatile uint16_t vWriteValue[12];
 extern volatile uint16_t vReadValue[12];
-extern int16_t mWriteValue[ID_MAX][2];
-extern int16_t mReadValue[ID_MAX][2];
+extern volatile int16_t mWriteValue[ID_MAX][2];
+extern volatile int16_t mReadValue[ID_MAX][2];
 /////
 
 // extern double errSum, lastErr;

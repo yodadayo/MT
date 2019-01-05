@@ -2,7 +2,6 @@
 #define MoterControl_h
 
 #include <stdint.h>
-#include <unistd.h>
 
 class MoterControl
 {
