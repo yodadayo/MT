@@ -458,14 +458,14 @@ uint16_t DynamixelV2::GetModelNumber (uint8_t id, int32_t mask,
   ReadWordData(id, ADDRESS_MODEL_NUMBER, &result, mask, timeout);
   return result;
 }
-
+*/
 uint16_t DynamixelV2::GetTargetPosition (uint8_t id, int32_t mask, int32_t timeout) {
   uint16_t  result;
 
   ReadWordData(id, ADDRESS_GOAL_POSITION, &result, mask, timeout);
   return result;
 }
-
+/*
 
 void DynamixelV2::SendSyncPosition(SyncPosData *pos, int32_t num) {
   uint8_t   param[150];
@@ -503,7 +503,6 @@ void DynamixelV2::SendSyncPosition(SyncPosData *pos, int32_t num) {
 //    }
 //}
 
-*/
 uint16_t DynamixelV2::GetTargetVelocity (uint8_t id, int32_t mask, int32_t timeout) {
   uint16_t  result;
 
@@ -514,7 +513,6 @@ uint16_t DynamixelV2::GetTargetVelocity (uint8_t id, int32_t mask, int32_t timeo
 void DynamixelV2::SetTargetVelocity (uint8_t id, uint16_t velocity, int32_t mask,  int32_t timeout) {
   WriteWordData (id, ADDRESS_GOAL_VELOCITY, velocity, mask,  timeout);
 }
-/*
 
 void DynamixelV2::SetTorqueLimit (uint8_t id,uint16_t torque, int32_t mask, int32_t timeout){
   WriteWordData (id, ADDRESS_TORQUE_LIMIT, torque, mask, timeout);

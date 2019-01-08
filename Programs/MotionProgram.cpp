@@ -42,16 +42,16 @@ g++ -o ./MOTION ./MotionProgram.cpp ./lib/SlaveControlCommand.cpp ./lib/SPIM_Ras
 #define LEFT_PITCH 2
 
 // Valve
-#define EXHAUST 3500
-#define SUPPLY 3600
-#define CLOSE 3700
+#define E 3500 // Exhaust
+#define S 3600 // Supply
+#define C 3700 // Close
 #define V_NUM 8
 
 #define CS_VALVE 6
 
 // mode
 #define WALK 1
-#define RUN 2
+#define STEP 2
 #define TEST 3
 uint8_t mode = 0;
 
@@ -72,67 +72,82 @@ uint16_t ValveTest[4] = {600, 300, 0, 300};
 uint16_t MoterTest[4] = {-20, 0, 20, 0};
 
 // // Parameter For Photograph
-// uint16_t ValvePressure[8] = { EXHAUST, // right front shin (0)
-// 				SUPPLY, // right back shin (1)
-// 				EXHAUST, // right back femur (2)
-// 				EXHAUST, // left front shin (3)
-// 				EXHAUST, // left back shin (4)
-// 				EXHAUST, // left back femur (5)
-// 				SUPPLY, //  right front femur(6)
-// 				SUPPLY // left front femur (9)
+// uint16_t ValvePressure[8] = { E, // right front shin (0)
+// 				S, // right back shin (1)
+// 				E, // right back femur (2)
+// 				E, // left front shin (3)
+// 				E, // left back shin (4)
+// 				E, // left back femur (5)
+// 				S, //  right front femur(6)
+// 				S // left front femur (9)
 // };
 
 // Parameter (left leg is frontward in the initial state)
-uint16_t ValvePressure_w[8][W_PHASE] = { {EXHAUST, EXHAUST, EXHAUST, EXHAUST, SUPPLY, EXHAUST, EXHAUST, EXHAUST, EXHAUST, SUPPLY}, // right front shin (0)
-					 {SUPPLY, EXHAUST, EXHAUST, EXHAUST, EXHAUST, EXHAUST, EXHAUST, EXHAUST, EXHAUST, EXHAUST}, // right back shin (1)
-					 {EXHAUST, EXHAUST, EXHAUST, EXHAUST, EXHAUST, SUPPLY, SUPPLY, SUPPLY, SUPPLY, EXHAUST}, // right back femur (2)
-					 {EXHAUST, EXHAUST, EXHAUST, EXHAUST, SUPPLY, EXHAUST, EXHAUST, EXHAUST, EXHAUST, SUPPLY}, // left front shin (3)
-					 {EXHAUST, EXHAUST, EXHAUST, EXHAUST, EXHAUST, SUPPLY, EXHAUST, EXHAUST, EXHAUST, EXHAUST}, // left back shin (4)
-					 {EXHAUST, SUPPLY, SUPPLY, SUPPLY, SUPPLY, EXHAUST, EXHAUST, EXHAUST, EXHAUST, EXHAUST}, // left back femur (5)
-					 {SUPPLY, SUPPLY, SUPPLY, SUPPLY, SUPPLY, EXHAUST, EXHAUST, EXHAUST, EXHAUST, SUPPLY}, //  right front femur(6)
-					 {SUPPLY, EXHAUST, EXHAUST, EXHAUST, EXHAUST, SUPPLY, SUPPLY, SUPPLY, SUPPLY, SUPPLY} // left front femur (9)
+uint16_t ValvePressure_w[8][W_PHASE] = { {E, E, E, E, S, S, S, S, S, S},
+					 // right front shin (0)
+					 {S, E, E, E, E, S, S, E, E, E},
+					 // right back shin (1)
+					 {E, E, E, E, E, E, E, E, E, E},
+					 // right back femur (2)
+					 {S, S, S, S, S, E, E, E, E, S},
+					 // left front shin (3)
+					 {S, S, E, E, E, S, E, E, E, E},
+					 // left back shin (4)
+					 {E, E, E, E, E, E, E, E, E, E},
+					 // left back femur (5)
+					 {E, E, E, S, S, S, S, S, S, S},
+					 //  right front femur(6)
+					 {S, S, S, S, S, E, E, E, S, S}
+					 // left front femur (9)
 };
 
-uint16_t ValvePressure_r[8][R_PHASE] = { {CLOSE}, // right front shin (0)
-					 {CLOSE}, // right back shin (1)
-					 {CLOSE}, // right back femur (2)
-					 {CLOSE}, // left front shin (3)
-					 {CLOSE}, // left back shin (4)
-					 {CLOSE}, // left back femur (5)
-					 {SUPPLY, SUPPLY, SUPPLY, SUPPLY, SUPPLY, SUPPLY}, //  right front femur(6)
-					 {SUPPLY, SUPPLY, SUPPLY, SUPPLY, SUPPLY, SUPPLY} // left front femur (9)
+uint16_t vstep[8][W_PHASE] = { {420, E, E, E, E, 420, 420, 420, 420, 420},
+			      // right front shin (0)
+			      {S, E, E, E, E, S, S, S, S, S},
+			      // right back shin (1)
+			      {E, S, S, S, E, E, E, E, E, E},
+			      // right back femur (2)
+			      {420, 420, 420, 420, 420, 420, E, E, E, E},
+			      // left front shin (3)
+			      {S, S, S, S, S, S, E, E, E, E},
+			      // left back shin (4)
+			      {E, E, E, E, E, E, S, S, S, E},
+			      // left back femur (5)
+			      {S, E, E, E, E, S, S, S, S, S},
+			      //  right front femur(6)
+			      {S, S, S, S, S, S, E, E, E, E}
+			      // left front femur (9)
 };
 
 // walk test parameter
 int16_t MoterValue_w[ID_NUM][W_PHASE][2] = // {deg, rpm}
   { 
-   { {-15,100}, {-15,300}, {-15,300}, {-15,100}, {-15,100}, {15,300}, {15,300}, {15,100}, {15,100}, {15,300} }, // RIGHT_PITCH
-   { {15,100}, {15,300}, {15,300}, {15,100}, {15,100}, {-15,300}, {-15,300}, {-15,100}, {-15,100}, {-15,300} }, // LEFT_PITCH
+   { {-20,100}, {-20,300}, {-20,300}, {0,100}, {0,100}, {20,300}, {20,300}, {20,100}, {20,100}, {20,300} }, // RIGHT_PITCH
+   { {20,100}, {20,300}, {20,300}, {20,100}, {20,100}, {-20,300}, {-20,300}, {-20,100}, {0,100}, {0,300} }, // LEFT_PITCH
    { {10,100}, {10,300}, {10,300}, {10,100}, {10,100}, {-5,300}, {-5,300}, {-5,100}, {-5,100}, {-5,300} }, // RIGHT_ROLL
    { {-5,100}, {-5,300}, {-5,300}, {-5,100}, {-5,100}, {10,300}, {10,300}, {10,100}, {10,100}, {10,300} } // LEFT_ROLL
   };
 
 // int16_t MoterValue_w[ID_NUM][W_PHASE][2] = // {deg, rpm}
 //   { 
-//    { {15,100}, {10,300}, {3,300}, {-3,100}, {-10,100}, {-15,300}, {-10,300}, {-3,100}, {3,100}, {10,300} }, // RIGHT_PITCH
-//    { {-15,100}, {-10,300}, {-3,300}, {3,100}, {10,100}, {15,300}, {10,300}, {3,100}, {-3,100}, {-10,300} }, // LEFT_PITCH
+//    { {10,100}, {10,300}, {3,300}, {-3,100}, {-10,100}, {-10,300}, {-10,300}, {-3,100}, {3,100}, {10,300} }, // RIGHT_PITCH
+//    { {-10,100}, {-10,300}, {-3,300}, {3,100}, {10,100}, {10,300}, {10,300}, {3,100}, {-3,100}, {-10,300} }, // LEFT_PITCH
 //    { {-5,100}, {-3,300}, {-1,300}, {1,100}, {3,100}, {5,300}, {3,300}, {1,100}, {-1,100}, {-3,300} }, // RIGHT_ROLL
 //    { {5,100}, {3,300}, {1,300}, {-1,100}, {-3,100}, {-5,300}, {-3,300}, {-1,100}, {1,100}, {3,300} } // LEFT_ROLL
 //   };
 
-int16_t MoterValue_r[ID_NUM][R_PHASE][2] = // {deg, rpm}
-  { { {15,100}, {0,300}, {-15,300}, {0,100}, {15,100}, {0,300} }, // RIGHT_PITCH
-    { {-15,100}, {0,300}, {15,300}, {0,100}, {-15,100}, {0,300} }, // LEFT_PITCH
-    { {-5,100}, {0,300}, {5,300}, {0,100}, {-5,100}, {0,300} }, // RIGHT_ROLL
-    { {-5,100}, {0,300}, {5,300}, {0,100}, {-5,100}, {0,300} } // LEFT_ROLL
+int16_t mstep[ID_NUM][W_PHASE] = // {deg, rpm}
+  { { 0, 0, 10, 30, 30, 0, 0, 0, 0, 0}, // RIGHT_PITCH
+    { 0, 0, 0, 0, 0, 0, 0, 10, 30, 30}, // LEFT_PITCH
+    { 0, 0, 0, 0, 0, 0, -25, -25, -25, -25}, // RIGHT_ROLL
+    { 0, -25, -25, -25, -25, 0, 0, 0, 0, 0} // LEFT_ROLL
   };
 
 
 using namespace ssr::dynamixel;
 
-uint16_t cycle = 0;
+uint16_t cycle = 0; // uint16_t cycle = 8;
 uint16_t w_cycle = 0;
-uint16_t r_cycle = 0;
 
 // 
 //
@@ -140,12 +155,15 @@ uint16_t r_cycle = 0;
 
 inline uint16_t vtops(uint16_t vol)
 {
-  return 0.286*(vol-800)+100;
+  if(vol == E || vol == S || vol == C)
+    return vol;
+  else
+    return 0.286*(vol-800)+100;
 }
 
 inline uint16_t pstov(uint16_t ps)
 {
-  if(ps == EXHAUST || ps == SUPPLY || ps == CLOSE)
+  if(ps == E || ps == S || ps == C)
     return ps;
   else
     return 3.50*ps+450;
@@ -190,26 +208,24 @@ void handler1(union sigval sv){
     w_cycle++;
     
     break;
-
-  case RUN:
-    // running mode
-    if(r_cycle / 100 > 0){
-      
-      for(i = 0; i < V_NUM; i++){
-	
-	vWriteValue[i] = ValvePressure_r[i][cycle];
-	if(i == 7) vWriteValue[9] = ValvePressure_r[i][cycle];
-	
-      }
-      
+    
+  case STEP:
+    // stepping mode
+    
     for(i = 0; i < ID_NUM; i++){
       
-      if(i == 0){ // right leg
-  	mWriteValue[i][0] = MoterValue_r[cycle][i][0];
-  	mWriteValue[i][1] = MoterValue_r[cycle][i][1];
+      if(i%2 == 1){ // right leg
+	if(cycle != 0)
+	  mWriteValue[i][0] = -((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][cycle])/100;
+	else
+	  mWriteValue[i][0] = -((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][9])/100; 
       }
-      else // left leg
-  	mWriteValue[i][0] = -MoterValue_r[cycle][i][0];
+      else{ // left leg
+	if(cycle != 0)
+	  mWriteValue[i][0] = ((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][cycle])/100;
+	else
+	  mWriteValue[i][0] = ((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][9])/100;
+      }
       
       // Safety constraints (Leave this uncommented!!)
       if(mWriteValue[i][0] < -35) mWriteValue[i][0] = -35;
@@ -217,14 +233,38 @@ void handler1(union sigval sv){
       
     }
     
-    r_cycle = 0; cycle++;
-    if(cycle > R_PHASE - 1) cycle = 0;
+    if(w_cycle / 100 > 0){
+      
+      for(i = 0; i < V_NUM; i++){
+	
+	vWriteValue[i] = pstov(vstep[i][cycle]);
+	if(i == 7) vWriteValue[9] = pstov(vstep[i][cycle]);
+	
+      }
+      
+      for(i = 0; i < ID_NUM; i++){
+	
+	if(i%2 == 1){ // right leg
+	  mWriteValue[i][0] = -mstep[i][cycle];
+	}
+	else{ // left leg
+	  mWriteValue[i][0] = mstep[i][cycle];
+	}
+	
+	// Safety constraints (Leave this uncommented!!)
+	if(mWriteValue[i][0] < -35) mWriteValue[i][0] = -35;
+	else if(35 < mWriteValue[i][0]) mWriteValue[i][0] = 35;
+      
+      }
+      
+      w_cycle = 0; cycle++;
+      if(cycle > W_PHASE - 1) cycle = 0;
     
     }
-    r_cycle++;
-
-    break;
+    w_cycle++;
     
+    break;
+
   case TEST:
     // test mode
     if(w_cycle / 1000 > 0){ // activate every 1sec
@@ -233,8 +273,8 @@ void handler1(union sigval sv){
 	
 	vWriteValue[i] = pstov(ValveTest[cycle]);
 	// if(cycle / 2 == 0)
-	//   vWriteValue[i] = SUPPLY;
-	// else vWriteValue[i] = EXHAUST;
+	//   vWriteValue[i] = S;
+	// else vWriteValue[i] = E;
 	if(i == 7) vWriteValue[9] = pstov(ValveTest[cycle]);
 	
       }
@@ -272,9 +312,9 @@ void handler100(union sigval sv){
 
   for(int i = 0; i < V_NUM; i++){
     if(i != 7)
-      printf("TargetValvePressure %d >> %d\n", i, vWriteValue[i]);
+      printf("TargetValvePressure %d >> %d\n", i, vtops(vWriteValue[i]));
     else 
-      printf("TargetValvePressure 9 >> %d\n", vWriteValue[9]);
+      printf("TargetValvePressure 9 >> %d\n", vtops(vWriteValue[9]));
   }
   printf("\n");
   for(int i = 0; i < V_NUM; i++){
@@ -325,7 +365,7 @@ void timerSetting(void){
 
 int main(void){
 
-  int i;
+  int i; uint8_t first = cycle - 1;
   
   // valve board are controlled in 16MHz
   SPIR.initialization(16000000,1000000);
@@ -344,24 +384,57 @@ int main(void){
   //    (you can select the motion here)
   //
   //
-  mode = WALK;
+  mode = STEP;
 
   
-  // Initial setting (if the mode is WALK) 
+  // // Initial setting (if the mode is WALK)
+
+  // if(first < 0) first = W_PHASE - 1;
+  // for(i = 0; i < V_NUM; i++){
+	
+  //   vWriteValue[i] = pstov(ValvePressure_w[i][first]);
+  //   if(i == 7) vWriteValue[9] = pstov(ValvePressure_w[i][first]);
+    
+  // }
+  
+  // for(i = 0; i < ID_NUM; i++){
+    
+  //   if(i%2 == 1){ // right leg
+  //     mWriteValue[i][0] = MoterValue_w[i][first][0];
+  //   }
+  //   else // left leg
+  //     mWriteValue[i][0] = -MoterValue_w[i][first][0];
+    
+  //   // Safety constraints (Leave this uncommented!!)
+  //   if(mWriteValue[i][0] < -35) mWriteValue[i][0] = -35;
+  //   else if(35 < mWriteValue[i][0]) mWriteValue[i][0] = 35;
+    
+  // }
+
+  // SCC.transfer_volume_all_analog(CS_VALVE);
+  
+  // for(i = 0; i < ID_NUM; i++){
+  //   // m.SetTargetVelocity(i+1, (uint16_t)mWriteValue[i][1]);
+  //   m.MovePosition(i+1, -mWriteValue[i][0]*4096/360+2048);
+  // }
+
+  
+  // Initial setting (if the mode is STEP)
+
   for(i = 0; i < V_NUM; i++){
 	
-    vWriteValue[i] = pstov(ValvePressure_w[i][9]);
-    if(i == 7) vWriteValue[9] = pstov(ValvePressure_w[i][9]);
+    vWriteValue[i] = pstov(vstep[i][0]);
+    if(i == 7) vWriteValue[9] = pstov(vstep[i][0]);
     
   }
   
   for(i = 0; i < ID_NUM; i++){
     
     if(i%2 == 1){ // right leg
-      mWriteValue[i][0] = MoterValue_w[i][9][0];
+      mWriteValue[i][0] = -mstep[i][0];
     }
     else // left leg
-      mWriteValue[i][0] = -MoterValue_w[i][9][0];
+      mWriteValue[i][0] = mstep[i][0];
     
     // Safety constraints (Leave this uncommented!!)
     if(mWriteValue[i][0] < -35) mWriteValue[i][0] = -35;
@@ -385,7 +458,7 @@ int main(void){
 
   while(1){
     
-    usleep(10*1000);
+    usleep(20*1000);
     
     for(i = 0; i < ID_NUM; i++){
       // m.SetTargetVelocity(i+1, (uint16_t)mWriteValue[i][1]);
