@@ -492,28 +492,29 @@ void DynamixelV2::SendSyncPosition(SyncPosData *pos, int32_t num) {
 
 //void DynamixelV2::MoveVelocity(uint8_t id, uint16_t velocity) {
 //    if(velocity == 0){
-//      WriteWordData (id, ADDRESS_GOAL_SPEED, 1);
+//      WriteWordData (id, ADDRESS_GOAL_VELOCITY, 1);
 //      WriteWordData (id, ADDRESS_GOAL_POSITION, GetCurrentPosition(id));
 //    }else if(velocity < 0){
-//      WriteWordData (id, ADDRESS_GOAL_SPEED, -velocity);
+//      WriteWordData (id, ADDRESS_GOAL_VELOCITY, -velocity);
 //      WriteWordData (id, ADDRESS_GOAL_POSITION, 1);
 //    }else if(velocity > 0){
-//      WriteWordData (id, ADDRESS_GOAL_SPEED, velocity);            
+//      WriteWordData (id, ADDRESS_GOAL_VELOCITY, velocity);            
 //      WriteWordData (id, ADDRESS_GOAL_POSITION, 1023);
 //    }
 //}
 
+*/
 uint16_t DynamixelV2::GetTargetVelocity (uint8_t id, int32_t mask, int32_t timeout) {
   uint16_t  result;
 
-  ReadWordData(id, ADDRESS_GOAL_SPEED, &result, mask, timeout);
+  ReadWordData(id, ADDRESS_GOAL_VELOCITY, &result, mask, timeout);
   return result;
 }
 
 void DynamixelV2::SetTargetVelocity (uint8_t id, uint16_t velocity, int32_t mask,  int32_t timeout) {
-  WriteWordData (id, ADDRESS_GOAL_SPEED, velocity, mask,  timeout);
+  WriteWordData (id, ADDRESS_GOAL_VELOCITY, velocity, mask,  timeout);
 }
-
+/*
 
 void DynamixelV2::SetTorqueLimit (uint8_t id,uint16_t torque, int32_t mask, int32_t timeout){
   WriteWordData (id, ADDRESS_TORQUE_LIMIT, torque, mask, timeout);
@@ -536,7 +537,7 @@ short DynamixelV2::GetCurrentVelocity(uint8_t id, int32_t mask, int32_t timeout)
   short speed;
   uint16_t  result;
 
-  ReadWordData(id, ADDRESS_PRESENT_SPEED, &result, mask, timeout);
+  ReadWordData(id, ADDRESS_PRESENT_VELOCITY, &result, mask, timeout);
   if(result > 1024) {
     speed = -(result-1024);
   } else {

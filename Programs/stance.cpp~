@@ -1,0 +1,104 @@
+/*
+
+file: stance.cpp
+purpose: 
+
+compile with the command :
+g++ -o ./STANCE ./stance.cpp ./lib/SlaveControlCommand.cpp ./lib/OperationCommand.cpp ./lib/SPIM_Ras.cpp ./libdxl/DynamixelV2.cpp -l wiringPi -lrt -lbcm2835
+
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <limits.h>
+#include <stdint.h>
+#include <time.h>
+#include <sys/time.h>
+#include <wiringPiSPI.h>
+#include <wiringPi.h>
+#include <signal.h>
+#include <unistd.h>
+// original library
+#include "lib/initialization.h"
+#include "lib/SPIM_Ras.h"
+#include "lib/SlaveControlCommand.h"
+#include "libdxl/DynamixelV2.h"
+
+#define EXHAUST 3500
+#define SUPPLY 3600
+#define CLOSE 3700
+#define V_NUM 8
+
+#define CS_VALVE 6
+
+// Moter 
+#define SERIAL_PORT "/dev/ttyUSB0"
+#define BAUD_RATE 57600
+#define ID_NUM 4
+
+#define RIGHT_ROLL 3
+#define RIGHT_PITCH 1
+#define LEFT_ROLL 4
+#define LEFT_PITCH 2
+
+
+inline uint16_t vtops(uint16_t vol)
+{
+  return 0.343*(vol-800);
+}
+
+
+int main(void){
+  
+  // valve board are controlled in 16MHz
+  SPIR.initialization(16000000,1000000);
+
+  SPIR.begin(CS_VALVE);
+
+  ssr::dynamixel::DynamixelV2 m(SERIAL_PORT, BAUD_RATE);
+  m.TorqueEnable(RIGHT_ROLL);
+  m.TorqueEnable(RIGHT_PITCH);
+  m.TorqueEnable(LEFT_ROLL);
+  m.TorqueEnable(LEFT_PITCH);
+    
+  // // start timer
+  // timerSetting();
+  
+  for(int i=0; i<10; i++)
+    vWriteValue[i] = SUPPLY;
+  vWriteValue[2] = EXHAUST;
+  vWriteValue[5] = EXHAUST;
+
+  for(int i=0; i<ID_NUM; i++){
+    // m.SetTargetVelocity(i+1, (uint16_t)mWriteValue[i][1]);
+    m.MovePosition(i+1, 2048);
+  }
+  
+  while(1){
+    
+    SCC.transfer_volume_all_analog(CS_VALVE);
+    
+    for(int i=0; i<V_NUM; i++){
+      if(i != 7)
+    	printf("ValvePressure %d >> %d\n", i, vtops(vReadValue[i]));
+      else
+    	printf("ValvePressure 9 >> %d\n", vtops(vReadValue[9]));
+    }
+    printf("---------------------\n\n");
+    // for(int i=0; i<V_NUM; i++){
+    //   if(i != 7)
+    // 	printf("ValvePressure %d >> %d\n", i, vReadValue[i]);
+    //   else
+    // 	printf("ValvePressure 9 >> %d\n", vReadValue[9]);
+    // }
+    // printf("---------------------\n\n");
+    
+    
+    usleep(1*1000*1000);
+
+  }
+  
+  return 0;
+  
+}

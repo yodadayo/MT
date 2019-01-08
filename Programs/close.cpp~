@@ -1,10 +1,10 @@
 /*
 
-file: init.cpp
-purpose: make robot be an initial state.
+file: close.cpp
+purpose: close valves
 
 compile with the command :
-g++ -o ./INIT ./init.cpp ./lib/SlaveControlCommand.cpp ./lib/OperationCommand.cpp ./lib/SPIM_Ras.cpp ./libdxl/DynamixelV2.cpp -l wiringPi -lrt -lbcm2835
+g++ -o ./CLOSE ./close.cpp ./lib/SlaveControlCommand.cpp ./lib/SPIM_Ras.cpp ./libdxl/DynamixelV2.cpp -l wiringPi -lrt -lbcm2835
 
 */
 
@@ -25,6 +25,14 @@ g++ -o ./INIT ./init.cpp ./lib/SlaveControlCommand.cpp ./lib/OperationCommand.cp
 #include "lib/SlaveControlCommand.h"
 #include "libdxl/DynamixelV2.h"
 
+#define EXHAUST 3500
+#define SUPPLY 3600
+#define CLOSE 3700
+#define V_NUM 8
+
+#define CS_VALVE 6
+
+// Moter 
 #define SERIAL_PORT "/dev/ttyUSB0"
 #define BAUD_RATE 57600
 #define ID_NUM 4
@@ -33,13 +41,6 @@ g++ -o ./INIT ./init.cpp ./lib/SlaveControlCommand.cpp ./lib/OperationCommand.cp
 #define RIGHT_PITCH 1
 #define LEFT_ROLL 4
 #define LEFT_PITCH 2
-
-#define EXHAUST 3500
-#define SUPPLY 3600
-#define CLOSE 3700
-
-#define CS_VALVE 6
-
 
 int main(void){
   
@@ -51,30 +52,25 @@ int main(void){
   ssr::dynamixel::DynamixelV2 m(SERIAL_PORT, BAUD_RATE);
   usleep(1000);
   
-  m.TorqueEnable(RIGHT_ROLL);
-  m.TorqueEnable(RIGHT_PITCH);
-  m.TorqueEnable(LEFT_ROLL);
-  m.TorqueEnable(LEFT_PITCH);
-  
   // // start timer
   // timerSetting();
   
-  for(int i=0; i<10; i++)
-    vWriteValue[i] = EXHAUST;
-
-  SCC.transfer_volume_all_analog(CS_VALVE);
-
   usleep(1*1000*1000);
-  
-  m.TorqueDisable(RIGHT_ROLL);
-  m.TorqueDisable(RIGHT_PITCH);
-  m.TorqueDisable(LEFT_ROLL);
-  m.TorqueDisable(LEFT_PITCH);
   
   for(int i=0; i<10; i++)
     vWriteValue[i] = CLOSE;
 
   SCC.transfer_volume_all_analog(CS_VALVE);
+  
+  
+  for(int i=0; i<V_NUM; i++){
+    if(i != 7)
+      printf("ValvePressure %d >> %d\n", i, vReadValue[i]);
+    else 
+      printf("ValvePressure 9 >> %d\n", vReadValue[9]);
+  }
+  printf("---------------------\n\n");
+  
 
   usleep(1*1000);
   

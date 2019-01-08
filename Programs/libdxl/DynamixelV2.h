@@ -818,10 +818,8 @@ namespace ssr {
        * @exception ssr::dynamixel::OverloadException
        * @exception ssr::dynamixel::RangeException
        */
-      // void SetTargetVelocity (uint8_t id,uint16_t velocity, int32_t mask=0x7F, int32_t timeout=DEFAULT_RESPONSE_TIME);
-    void SetTargetVelocity (uint8_t id,uint16_t velocity, int32_t mask=0x7F, int32_t timeout=DEFAULT_RESPONSE_TIME){
-	WriteData<int32_t>(id, ADDRESS_GOAL_VELOCITY, velocity, timeout);
-    }
+      void SetTargetVelocity (uint8_t id, uint16_t velocity, int32_t mask=0x7F, int32_t timeout=DEFAULT_RESPONSE_TIME);
+    
       /** 
        * @if jp
        * @brief åªç›ÇÃñ⁄ïWë¨ìxÇéÊìæ
