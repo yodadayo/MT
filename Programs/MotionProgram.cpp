@@ -32,6 +32,9 @@ g++ -o ./MOTION ./MotionProgram.cpp ./lib/SlaveControlCommand.cpp ./lib/SPIM_Ras
 // Running Setting
 #define R_PHASE 6
 
+// First Step From Standing
+#define FIRST_PHASE 5
+
 // Moter 
 #define SERIAL_PORT "/dev/ttyUSB0"
 #define BAUD_RATE 57600
@@ -136,7 +139,7 @@ int16_t mstep[ID_NUM][W_PHASE] = // {deg, rpm}
 
 
 // First Step Parameter(Starting From Standing)
-int16_t firststep_m[ID_NUM][5] = // {deg, rpm}
+int16_t firststep_m[ID_NUM][FIRST_PHASE] = // {deg, rpm}
   { { 15, 0, 30, 30, 0}, // RIGHT_PITCH
     { 15, 20, 30, 0, 0}, // LEFT_PITCH
     { 0, -10, -10, 0, 0}, // RIGHT_ROLL
@@ -214,9 +217,45 @@ void handler1(union sigval sv){
   switch(mode){
   case WALK:
     if(fs_flag){
+
+      for(i = 0; i < ID_NUM; i++){
+	
+	if((i+1)%2 == 1){ // right leg
+	  if(cycle != 0)
+	    mWriteValue[i] = ((100 - w_cycle)*firststep_m[i][cycle - 1] + w_cycle*firststep_m[i][cycle])/100;
+	  else
+	    mWriteValue[i] = ((100 - w_cycle)*firststep_m[i][9] + w_cycle*firststep_m[i][cycle])/100;
+	}
+	else{ // left leg
+	  if(cycle != 0)
+	    mWriteValue[i] = -((100 - w_cycle)*firststep_m[i][cycle - 1] + w_cycle*firststep_m[i][cycle])/100;
+	  else
+	    mWriteValue[i] = -((100 - w_cycle)*firststep_m[i][9] + w_cycle*firststep_m[i][cycle])/100;
+	}
+	
+      }
+      
+      if(w_cycle / 100 > 0){
+	
+	for(i = 0; i < V_NUM; i++){
+	  
+	  vWriteValue[i] = pstov(firststep_v[i][cycle]);
+	  if(i == 7) vWriteValue[9] = pstov(firststep_v[i][cycle]);
+	  
+	}
+	
+	w_cycle = 0; cycle++;
+	if(cycle > FIRST_PHASE - 1){
+	  cycle = 0; fs_flag = 0;
+	}
+    
+      }
+      w_cycle++;
       
     }
+    
     else{
+      
       for(i = 0; i < ID_NUM; i++){
 	
 	if((i+1)%2 == 1){ // right leg
