@@ -19,6 +19,7 @@ g++ -o ./MOTION ./MotionProgram.cpp ./lib/SlaveControlCommand.cpp ./lib/SPIM_Ras
 #include <wiringPi.h>
 #include <signal.h>
 #include <unistd.h>
+#include <fstream>
 // original library
 #include "lib/initialization.h"
 #include "lib/SPIM_Ras.h"
@@ -26,7 +27,7 @@ g++ -o ./MOTION ./MotionProgram.cpp ./lib/SlaveControlCommand.cpp ./lib/SPIM_Ras
 #include "libdxl/DynamixelV2.h"
 
 // Walking Setting
-#define W_PHASE 10
+#define W_PHASE 8
 
 // Running Setting
 #define R_PHASE 6
@@ -51,7 +52,6 @@ g++ -o ./MOTION ./MotionProgram.cpp ./lib/SlaveControlCommand.cpp ./lib/SPIM_Ras
 
 // mode
 #define WALK 1
-#define STEP 2
 #define TEST 3
 uint8_t mode = 0;
 
@@ -72,7 +72,7 @@ uint16_t ValveTest[4] = {600, 300, 0, 300};
 uint16_t MoterTest[4] = {-20, 0, 20, 0};
 
 // // Parameter For Photograph
-// uint16_t ValvePressure[8] = { E, // right front shin (0)
+// uint16_t ValvePressure[8] = {E, // right front shin (0)
 // 				S, // right back shin (1)
 // 				E, // right back femur (2)
 // 				E, // left front shin (3)
@@ -82,75 +82,103 @@ uint16_t MoterTest[4] = {-20, 0, 20, 0};
 // 				S // left front femur (9)
 // };
 
-// Parameter (left leg is frontward in the initial state)
-uint16_t ValvePressure_w[8][W_PHASE] = { {E, E, E, E, S, S, S, S, S, S},
-					 // right front shin (0)
-					 {S, E, E, E, E, S, S, E, E, E},
-					 // right back shin (1)
-					 {E, E, E, E, E, E, E, E, E, E},
-					 // right back femur (2)
-					 {S, S, S, S, S, E, E, E, E, S},
-					 // left front shin (3)
-					 {S, S, E, E, E, S, E, E, E, E},
-					 // left back shin (4)
-					 {E, E, E, E, E, E, E, E, E, E},
-					 // left back femur (5)
-					 {E, E, E, S, S, S, S, S, S, S},
-					 //  right front femur(6)
-					 {S, S, S, S, S, E, E, E, S, S}
-					 // left front femur (9)
-};
 
-uint16_t vstep[8][W_PHASE] = { {420, E, E, E, E, 420, 420, 420, 420, 420},
+// // Parameter (left leg is frontward in the initial state)
+
+uint16_t vstep[8][W_PHASE] = { {S, E, E, S, S, S, S, S},
 			      // right front shin (0)
-			      {S, E, E, E, E, S, S, S, S, S},
+			       {S, S, E, E, S, S, S, S},
 			      // right back shin (1)
-			      {E, S, S, S, E, E, E, E, E, E},
+			       {E, E, S, E, E, E, E, E},
 			      // right back femur (2)
-			      {420, 420, 420, 420, 420, 420, E, E, E, E},
+			       {S, S, S, S, S, E, E, S},
 			      // left front shin (3)
-			      {S, S, S, S, S, S, E, E, E, E},
+			       {S, S, S, S, S, S, E, S},
 			      // left back shin (4)
-			      {E, E, E, E, E, E, S, S, S, E},
+			       {E, E, E, E, E, S, S, E},
 			      // left back femur (5)
-			      {S, E, E, E, E, S, S, S, S, S},
-			      //  right front femur(6)
-			      {S, S, S, S, S, S, E, E, E, E}
+			       {S, S, E, E, S, S, S, S},
+			      // right front femur(6)
+			       {S, S, S, S, S, S, E, E}
 			      // left front femur (9)
-};
-
-// walk test parameter
-int16_t MoterValue_w[ID_NUM][W_PHASE][2] = // {deg, rpm}
-  { 
-   { {-20,100}, {-20,300}, {-20,300}, {0,100}, {0,100}, {20,300}, {20,300}, {20,100}, {20,100}, {20,300} }, // RIGHT_PITCH
-   { {20,100}, {20,300}, {20,300}, {20,100}, {20,100}, {-20,300}, {-20,300}, {-20,100}, {0,100}, {0,300} }, // LEFT_PITCH
-   { {10,100}, {10,300}, {10,300}, {10,100}, {10,100}, {-5,300}, {-5,300}, {-5,100}, {-5,100}, {-5,300} }, // RIGHT_ROLL
-   { {-5,100}, {-5,300}, {-5,300}, {-5,100}, {-5,100}, {10,300}, {10,300}, {10,100}, {10,100}, {10,300} } // LEFT_ROLL
-  };
-
-// int16_t MoterValue_w[ID_NUM][W_PHASE][2] = // {deg, rpm}
-//   { 
-//    { {10,100}, {10,300}, {3,300}, {-3,100}, {-10,100}, {-10,300}, {-10,300}, {-3,100}, {3,100}, {10,300} }, // RIGHT_PITCH
-//    { {-10,100}, {-10,300}, {-3,300}, {3,100}, {10,100}, {10,300}, {10,300}, {3,100}, {-3,100}, {-10,300} }, // LEFT_PITCH
-//    { {-5,100}, {-3,300}, {-1,300}, {1,100}, {3,100}, {5,300}, {3,300}, {1,100}, {-1,100}, {-3,300} }, // RIGHT_ROLL
-//    { {5,100}, {3,300}, {1,300}, {-1,100}, {-3,100}, {-5,300}, {-3,300}, {-1,100}, {1,100}, {3,300} } // LEFT_ROLL
-//   };
+}; // if W_PHASE is 8
+// uint16_t vstep[8][W_PHASE] = { {480, E, S, S, S, 480, 480, 480, 480, 480},
+// 			      // right front shin (0)
+// 			       {S, S, E, E, S, S, S, S, S, S},
+// 			      // right back shin (1)
+// 			       {E, E, S, S, E, E, E, E, E, E},
+// 			      // right back femur (2)
+// 			       {480, 480, 480, 480, 480, 480, E, S, S, S},
+// 			      // left front shin (3)
+// 			       {S, S, S, S, S, S, S, E, E, S},
+// 			      // left back shin (4)
+// 			       {E, E, E, E, E, E, S, S, S, E},
+// 			      // left back femur (5)
+// 			       {S, S, E, E, S, S, S, S, S, S},
+// 			      // right front femur(6)
+// 			       {S, S, S, S, S, S, S, E, E, S}
+// 			      // left front femur (9)
+// }; // if W_PHASE is 10
 
 int16_t mstep[ID_NUM][W_PHASE] = // {deg, rpm}
-  { { 0, 0, 10, 30, 30, 0, 0, 0, 0, 0}, // RIGHT_PITCH
-    { 0, 0, 0, 0, 0, 0, 0, 10, 30, 30}, // LEFT_PITCH
-    { 0, 0, 0, 0, 0, 0, -25, -25, -25, -25}, // RIGHT_ROLL
-    { 0, -25, -25, -25, -25, 0, 0, 0, 0, 0} // LEFT_ROLL
+  { { 15, 0, 30, 30, 0, -10, -20, -10}, // RIGHT_PITCH
+    { 15, 20, 30, 0, 0, 0, 30, 30}, // LEFT_PITCH
+    { 0, -10, -10, 0, 0, 0, -40, -15}, // RIGHT_ROLL
+    { 0, 10, -45, -35, 0, -10, -10, 10} // LEFT_ROLL
+  }; // if W_PHASE is 8
+
+// int16_t mstep[ID_NUM][W_PHASE] = // {deg, rpm}
+//   { { 0, 0, 15, 30, 15, 0, 0, 0, 0, 0}, // RIGHT_PITCH
+//     { 0, 0, 0, 0, 0, 0, 5, 15, 30, 15}, // LEFT_PITCH
+//     { 0, -5, 20, 10, 5, 0, 0, -30, -20, -10}, // RIGHT_ROLL
+//     { 0, 0, -30, -20, -10, 0, -5, 20, 10, 5}  // LEFT_ROLL
+//   }; // if W_PHASE is 10
+
+
+// First Step Parameter(Starting From Standing)
+int16_t firststep_m[ID_NUM][5] = // {deg, rpm}
+  { { 15, 0, 30, 30, 0}, // RIGHT_PITCH
+    { 15, 20, 30, 0, 0}, // LEFT_PITCH
+    { 0, -10, -10, 0, 0}, // RIGHT_ROLL
+    { 0, 10, -45, -35, 0} // LEFT_ROLL
   };
+uint16_t firststep_v[8][W_PHASE] = { {S, E, E, S, S},
+			      // right front shin (0)
+			       {S, S, E, E, S},
+			      // right back shin (1)
+			       {E, E, S, E, E},
+			      // right back femur (2)
+			       {S, S, S, S, S},
+			      // left front shin (3)
+			       {S, S, S, S, S},
+			      // left back shin (4)
+			       {E, E, E, E, E},
+			      // left back femur (5)
+			       {S, S, E, E, S},
+			      // right front femur(6)
+			       {S, S, S, S, S}
+			      // left front femur (9)
+}; // if W_PHASE is 8
+uint8_t fs_flag = 1;
+
+
+// Standing Parameter
+uint16_t stance_v[V_NUM] = {S, S, E, S, S, E, S, S};
+int16_t stance_m[ID_NUM] = {0, 0, 0, 0};
+
+
+
+
+
 
 
 using namespace ssr::dynamixel;
 
-uint16_t cycle = 0; // uint16_t cycle = 8;
+uint8_t cycle = 1;
 uint16_t w_cycle = 0;
 
 // 
-//
+// Transform values (v = Voltage, ps = Pressure) 
 // 
 
 inline uint16_t vtops(uint16_t vol)
@@ -169,6 +197,15 @@ inline uint16_t pstov(uint16_t ps)
     return 3.50*ps+450;
 }
 
+//
+//
+//
+//
+// Handler Settings
+//
+//
+//
+//
 
 void handler1(union sigval sv){
 
@@ -176,95 +213,45 @@ void handler1(union sigval sv){
 
   switch(mode){
   case WALK:
-    // walking mode
-    if(w_cycle / 100 > 0){
-      
-      for(i = 0; i < V_NUM; i++){
-	
-	vWriteValue[i] = pstov(ValvePressure_w[i][cycle]);
-	if(i == 7) vWriteValue[9] = pstov(ValvePressure_w[i][cycle]);
-	
-      }
-      
-      for(i = 0; i < ID_NUM; i++){
-	
-	if(i%2 == 1){ // right leg
-	  mWriteValue[i][0] = MoterValue_w[i][cycle][0];
-	  mWriteValue[i][1] = MoterValue_w[i][cycle][1];
-	}
-	else // left leg
-	  mWriteValue[i][0] = -MoterValue_w[i][cycle][0];
-	
-	// Safety constraints (Leave this uncommented!!)
-	if(mWriteValue[i][0] < -35) mWriteValue[i][0] = -35;
-	else if(35 < mWriteValue[i][0]) mWriteValue[i][0] = 35;
-      
-      }
-      
-      w_cycle = 0; cycle++;
-      if(cycle > W_PHASE - 1) cycle = 0;
-    
-    }
-    w_cycle++;
-    
-    break;
-    
-  case STEP:
-    // stepping mode
-    
-    for(i = 0; i < ID_NUM; i++){
-      
-      if(i%2 == 1){ // right leg
-	if(cycle != 0)
-	  mWriteValue[i][0] = -((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][cycle])/100;
-	else
-	  mWriteValue[i][0] = -((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][9])/100; 
-      }
-      else{ // left leg
-	if(cycle != 0)
-	  mWriteValue[i][0] = ((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][cycle])/100;
-	else
-	  mWriteValue[i][0] = ((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][9])/100;
-      }
-      
-      // Safety constraints (Leave this uncommented!!)
-      if(mWriteValue[i][0] < -35) mWriteValue[i][0] = -35;
-      else if(35 < mWriteValue[i][0]) mWriteValue[i][0] = 35;
+    if(fs_flag){
       
     }
-    
-    if(w_cycle / 100 > 0){
-      
-      for(i = 0; i < V_NUM; i++){
-	
-	vWriteValue[i] = pstov(vstep[i][cycle]);
-	if(i == 7) vWriteValue[9] = pstov(vstep[i][cycle]);
-	
-      }
-      
+    else{
       for(i = 0; i < ID_NUM; i++){
 	
-	if(i%2 == 1){ // right leg
-	  mWriteValue[i][0] = -mstep[i][cycle];
+	if((i+1)%2 == 1){ // right leg
+	  if(cycle != 0)
+	    mWriteValue[i] = ((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][cycle])/100;
+	  else
+	    mWriteValue[i] = ((100 - w_cycle)*mstep[i][9] + w_cycle*mstep[i][cycle])/100;
 	}
 	else{ // left leg
-	  mWriteValue[i][0] = mstep[i][cycle];
+	  if(cycle != 0)
+	    mWriteValue[i] = -((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][cycle])/100;
+	  else
+	    mWriteValue[i] = -((100 - w_cycle)*mstep[i][9] + w_cycle*mstep[i][cycle])/100;
 	}
 	
-	// Safety constraints (Leave this uncommented!!)
-	if(mWriteValue[i][0] < -35) mWriteValue[i][0] = -35;
-	else if(35 < mWriteValue[i][0]) mWriteValue[i][0] = 35;
-      
       }
       
-      w_cycle = 0; cycle++;
-      if(cycle > W_PHASE - 1) cycle = 0;
+      if(w_cycle / 100 > 0){
+	
+	for(i = 0; i < V_NUM; i++){
+	  
+	  vWriteValue[i] = pstov(vstep[i][cycle]);
+	  if(i == 7) vWriteValue[9] = pstov(vstep[i][cycle]);
+	  
+	}
+	
+	w_cycle = 0; cycle++;
+	if(cycle > W_PHASE - 1) cycle = 0;
     
+      }
+      w_cycle++;
     }
-    w_cycle++;
     
     break;
-
+    
   case TEST:
     // test mode
     if(w_cycle / 1000 > 0){ // activate every 1sec
@@ -281,13 +268,8 @@ void handler1(union sigval sv){
       
       for(i = 0; i < 2; i++){
 	
-	mWriteValue[i][0] = MoterTest[cycle];
-	// mWriteValue[i][1] = MoterValue_w[cycle][i][1];
-	
-	// Safety constraints (Leave this uncommented!!)
-	if(mWriteValue[i][0] < -30) mWriteValue[i][0] = -30;
-	else if(30 < mWriteValue[i][0]) mWriteValue[i][0] = 30;
-	
+	mWriteValue[i] = MoterTest[cycle];
+        	
       }
       
       w_cycle = 0; cycle++;
@@ -311,22 +293,55 @@ void handler1(union sigval sv){
 void handler100(union sigval sv){
 
   for(int i = 0; i < V_NUM; i++){
-    if(i != 7)
-      printf("TargetValvePressure %d >> %d\n", i, vtops(vWriteValue[i]));
-    else 
-      printf("TargetValvePressure 9 >> %d\n", vtops(vWriteValue[9]));
+    switch(vWriteValue[i]){
+    case S:
+      if(i != 7)
+	printf("TargetValvePressure %d >> SUPPLY\n", i);
+      else 
+	printf("TargetValvePressure 9 >> SUPPLY\n");
+      break;
+      
+    case E:
+      if(i != 7)
+	printf("TargetValvePressure %d >> EXHAUST\n", i);
+      else 
+	printf("TargetValvePressure 9 >> EXHAUST\n");
+      break;
+      
+    case C:
+      if(i != 7)
+	printf("TargetValvePressure %d >> CLOSE\n", i);
+      else 
+	printf("TargetValvePressure 9 >> CLOSE\n");
+      break;
+      
+    default:
+      if(i != 7)
+	printf("TargetValvePressure %d >> %d\n", i, vtops(vWriteValue[i]));
+      else 
+	printf("TargetValvePressure 9 >> %d\n", vtops(vWriteValue[9]));
+      break;
+    }
   }
-  printf("\n");
-  for(int i = 0; i < V_NUM; i++){
+  for(int i = 0; i < V_NUM; i++)
     if(i != 7)
-      printf("ValvePressure %d >> %d\n", i, vtops(vReadValue[i]));
+      printf("ValvePressure %d >> %d\n", i, pstov(vReadValue[i]));
     else 
-      printf("ValvePressure 9 >> %d\n", vtops(vReadValue[9]));
-  }
+      printf("ValvePressure 9 >> %d\n", pstov(vReadValue[9]));
   printf("cycle >> %d\n", cycle);
   printf("---------------------\n\n");
 
 }
+
+//
+//
+//
+//
+// Timer Setting
+//
+//
+//
+//
 
 void timerSetting(void){
   
@@ -362,8 +377,27 @@ void timerSetting(void){
   
 }
 
+//
+//
+//
+//
+// Main Function
+//
+//
+//
+//
 
 int main(void){
+
+  
+  //
+  //
+  //  Mode Setting
+  //    (you can select the motion here)
+  //
+  //
+  mode = WALK;
+
 
   int i; uint8_t first = cycle - 1;
   
@@ -377,76 +411,34 @@ int main(void){
   m.TorqueEnable(RIGHT_PITCH);
   m.TorqueEnable(LEFT_ROLL);
   m.TorqueEnable(LEFT_PITCH);
-
-  //
-  //
-  //  Mode Setting
-  //    (you can select the motion here)
-  //
-  //
-  mode = STEP;
-
   
-  // // Initial setting (if the mode is WALK)
-
-  // if(first < 0) first = W_PHASE - 1;
-  // for(i = 0; i < V_NUM; i++){
-	
-  //   vWriteValue[i] = pstov(ValvePressure_w[i][first]);
-  //   if(i == 7) vWriteValue[9] = pstov(ValvePressure_w[i][first]);
-    
-  // }
-  
-  // for(i = 0; i < ID_NUM; i++){
-    
-  //   if(i%2 == 1){ // right leg
-  //     mWriteValue[i][0] = MoterValue_w[i][first][0];
-  //   }
-  //   else // left leg
-  //     mWriteValue[i][0] = -MoterValue_w[i][first][0];
-    
-  //   // Safety constraints (Leave this uncommented!!)
-  //   if(mWriteValue[i][0] < -35) mWriteValue[i][0] = -35;
-  //   else if(35 < mWriteValue[i][0]) mWriteValue[i][0] = 35;
-    
-  // }
-
-  // SCC.transfer_volume_all_analog(CS_VALVE);
-  
-  // for(i = 0; i < ID_NUM; i++){
-  //   // m.SetTargetVelocity(i+1, (uint16_t)mWriteValue[i][1]);
-  //   m.MovePosition(i+1, -mWriteValue[i][0]*4096/360+2048);
-  // }
-
-  
-  // Initial setting (if the mode is STEP)
+  // Initial setting (if the mode is WALK)
 
   for(i = 0; i < V_NUM; i++){
 	
-    vWriteValue[i] = pstov(vstep[i][0]);
-    if(i == 7) vWriteValue[9] = pstov(vstep[i][0]);
+    vWriteValue[i] = pstov(stance_v[i]);
+    if(i == 7) vWriteValue[9] = pstov(stance_v[i]);
     
   }
   
   for(i = 0; i < ID_NUM; i++){
     
     if(i%2 == 1){ // right leg
-      mWriteValue[i][0] = -mstep[i][0];
+      mWriteValue[i] = -stance_m[i];
     }
     else // left leg
-      mWriteValue[i][0] = mstep[i][0];
+      mWriteValue[i] = stance_m[i];
     
     // Safety constraints (Leave this uncommented!!)
-    if(mWriteValue[i][0] < -35) mWriteValue[i][0] = -35;
-    else if(35 < mWriteValue[i][0]) mWriteValue[i][0] = 35;
+    if(mWriteValue[i] < -35) mWriteValue[i] = -35;
+    else if(35 < mWriteValue[i]) mWriteValue[i] = 35;
     
   }
 
   SCC.transfer_volume_all_analog(CS_VALVE);
   
   for(i = 0; i < ID_NUM; i++){
-    // m.SetTargetVelocity(i+1, (uint16_t)mWriteValue[i][1]);
-    m.MovePosition(i+1, -mWriteValue[i][0]*4096/360+2048);
+    m.MovePosition(i+1, -mWriteValue[i]*4096/360+2048);
   }
     
   printf("READY...\n\n\n");
@@ -459,10 +451,13 @@ int main(void){
   while(1){
     
     usleep(20*1000);
+	
+    // Safety constraints (Leave this uncommented!!)
+    if(mWriteValue[i] < -35) mWriteValue[i] = -35;
+    else if(35 < mWriteValue[i]) mWriteValue[i] = 35;
     
     for(i = 0; i < ID_NUM; i++){
-      // m.SetTargetVelocity(i+1, (uint16_t)mWriteValue[i][1]);
-      m.MovePosition(i+1, -mWriteValue[i][0]*4096/360+2048);
+      m.MovePosition(i+1, -mWriteValue[i]*4096/360+2048);
     }
     
   }

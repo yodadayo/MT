@@ -2,7 +2,7 @@
 #define Extern_h
 
 #include <stdint.h>
-#define ID_MAX 4
+#define ID_NUM 4
 
 extern  volatile uint32_t volume[12];
 extern  uint16_t MAX[12];
@@ -43,8 +43,7 @@ extern uint16_t countinious_time;
 
 extern volatile uint16_t vWriteValue[12];
 extern volatile uint16_t vReadValue[12];
-extern volatile int16_t mWriteValue[ID_MAX][2];
-extern volatile int16_t mReadValue[ID_MAX][2];
+extern volatile int16_t mWriteValue[ID_NUM];
 /////
 
 // extern double errSum, lastErr;

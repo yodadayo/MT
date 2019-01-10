@@ -1,0 +1,348 @@
+%#! jlatex main.tex
+%
+ \textwidth=16.5cm % 16cm 
+ \textheight=22cm %  26cm
+ \topmargin=0cm % -2cm
+ \oddsidemargin=0cm % 0cm 
+ \evensidemargin=0cm % 0cm %-1cm
+ \def\baselinestretch{1.2}
+
+
+%\def\cmfont@{\def\rm{\protect\prm}\def\sl{\protect\psl}%
+%\def\bf{\protect\pbf\protect\pgt}}\cmfont@
+%
+% Section Header
+%	from jarticle.sty, however, font and size was modified.
+%
+%脚注でのインデント
+\long\def\@makefntext#1{\parindent 1em\noindent
+  	\hbox to 2em{\hss$^{\@thefnmark}$~}%
+	\@tempdima\columnwidth\advance\@tempdima-2em\parbox[t]{\@tempdima}{#1}}
+
+\def\section{\newpage\@startsection {section}{1}{\z@}
+     {3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}{\Large\bf}}
+\def\subsection{\@startsection{subsection}{2}
+             {\z@}{3.25ex plus 1ex minus .2ex}
+                {1.5ex plus .2ex}{\large\bf}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}
+          {3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}{\normalsize\bf}}
+\def\paragraph{\@startsection{paragraph}{4}{\z@}
+               {3.25ex plus 1ex minus .2ex}{-1em}{\normalsize\bf}}
+\def\subparagraph{\@startsection{subparagraph}{4}{\parindent}
+                  {3.25ex plus 1ex minus .2ex}{-1em}{\normalsize\bf}}
+
+%  \eqnarray change ＆で空く間隔を狭くする。
+\def\eqnarray{
+        \stepcounter{equation}
+        \let\@currentlabel=\theequation
+        \global\@eqnswtrue
+        \global\@eqcnt\z@
+        \tabskip\@centering
+        \let\\=\@eqncr
+        $$\halign to \displaywidth\bgroup\@eqnsel\hskip\@centering
+        $\displaystyle\tabskip\z@{##}$&\global\@eqcnt\@ne
+        \hfil$\displaystyle{{}##{}}$\hfil
+        &\global\@eqcnt\tw@$\displaystyle\tabskip\z@{##}$\hfil
+        \tabskip\@centering&\llap{##}\tabskip\z@\cr}
+%
+% 段落の頭で１文字分字下げ
+\parindent=1zw
+%
+
+
+%
+% タイトルに関すること
+% for master student
+\def\areyoumaster{1}
+\def\isfinalstr{1}
+\def\isfinal#1{\def\isfinalstr{#1}}
+\newlength{\charlen}
+\if \areyoumaster 1
+    \def\doctitle{修 ~ 士 ~ 学 ~ 位 ~ 論 ~ 文}
+    \def\institutestr{
+	大阪大学大学院 基礎工学研究科 \\
+	システム創成専攻 システム科学領域}% 
+\else
+\def\doctitle{特 ~ 別 ~ 研 ~ 究 ~ 報 ~ 告}
+\def\institutestr{大阪大学 基礎工学部 システム科学科}
+\fi
+%
+%
+% title page items
+%
+%\typeout{commands...}
+\def\title#1{\def\titlestr{#1}}
+\def\titlelongstr
+\def\titlelong#1{\def\titlelongstr{#1}}
+%
+\def\author#1{\def\authorstr{#1}}
+%
+\def\supervisor#1{\def\supervisorstr{#1}}
+%
+\def\deadline#1{\def\deadlinestr{#1}
+}
+%
+% title page
+%
+%\typeout{titlepage}
+\def\titlepage{
+        \newpage
+	\thispagestyle{empty}
+	\setcounter{page}{0}
+	\if\isfinalstr 1
+		\vspace*{\fill}	\vspace*{\fill}	\vspace*{\fill}
+		\begin{center}
+			{\Huge\bf\doctitle}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\LARGE 題 ~~~~~ 目}
+		\end{center}
+		\vspace*{5mm}
+		\settowidth{\charlen}{\Large\bf{Regular Feedback Interconnection Problem}}
+                \addtolength{\charlen}{4mm}
+		\begin{center}
+			{\Large\bf\titlestr} \\
+			\rule[5mm]{\charlen}{0.5mm}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\large 指 ~ 導 ~ 教 ~ 員}
+		\end{center}
+		\vspace*{3mm}
+		\settowidth{\charlen}{\Large\bf{あああああああああああああああああああああああ}}
+                \addtolength{\charlen}{10mm}
+		\begin{center}
+			{\Large\bf\supervisorstr} \\
+			\rule[5mm]{\charlen}{0.5mm}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\large 報 ~~~ 告 ~~~ 者} 
+		\end{center}
+		\vspace*{3mm}
+		\settowidth{\charlen}{\Large\bf\authorstr}
+                \addtolength{\charlen}{10mm}
+		\begin{center}
+			{\Large\bf\authorstr} \\
+			\rule[5mm]{\charlen}{0.5mm}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\large\bf\deadlinestr}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\large\bf\institutestr}
+		\end{center}
+		\vspace*{\fill}	\vspace*{\fill}	\vspace*{\fill}
+	\else
+		\vspace*{\fill}	\vspace*{\fill}	\vspace*{\fill}
+		\begin{center}
+			{\Huge\bf DRAFT}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\Large\bf\titlestr}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+			{\LARGE\bf \authorstr}
+		\end{center}
+		\vspace*{\fill}
+		\begin{center}
+ 				{\Large\bf \today} \\
+		        {\Large\bf \number\curhour:\number\curmin}
+		\end{center}
+		\vspace*{\fill}	\vspace*{\fill}	\vspace*{\fill}
+	\fi
+%\newpage    %%%%%%%%%%%%%%%%%%%%%%変更（コメントアウト）
+\if \isfinalstr 1
+\else
+\pagestyle{myheadings}
+\markright{DRAFT (第\daytime 版) \hfill \authorstr \quad}
+\fi
+}
+
+
+%目次はsubsectionまで
+\setcounter{tocdepth}{3}
+%
+% 時間を表示
+\newcount\curmin \newcount\hour \newcount\onehour \newcount\curhour
+\onehour=60
+\hour=\time
+\divide\hour by\onehour
+\curhour=\hour
+\multiply\hour by-\onehour
+\curmin=\time
+\advance\curmin by\hour
+\def\daytime{{\sf \number\month/\number\day\ 
+\number\curhour:\number\curmin}}
+
+% 目次の改良
+\def\tableofcontents{\section*{\hfil 目~~~~~~次\hfil}
+\@starttoc{toc}}  %\addcontentsline{toc}{section}{目次}}
+%\def\l@section#1#2{\addpenalty{\@secpenalty} \addvspace{0em plus 1pt}
+% \@tempdima 1.5em \begingroup
+% \parindent \z@ \rightskip \@pnumwidth 
+% \parfillskip -\@pnumwidth 
+% \bf \leavevmode \advance\leftskip\@tempdima \hskip -\leftskip 
+%#1\nobreak\hfil     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%変更
+% \nobreak\hbox to\@pnumwidth{\hss #2}\par 
+% \endgroup}
+
+% 付録作り
+\def\Appendix{
+\section*{\hfil 付~~~~~~録\hfil}
+\setcounter{section}{0} %
+\setcounter{subsection}{0} %
+\addcontentsline{toc}{section}{付録}
+\def\thesection{\Alph{section}}
+\def\theequation{\thesection\arabic{equation}}%
+%\def\thefigure{\thesection\arabic{figure}}%
+%\def\thetable{\thesection\arabic{table}}%
+\def\themanyeqn{\theequation.\alph{whichequation}}
+\def\section{\@startsection {section}{1}{\z@}{3.5ex plus 1ex minus .2ex}
+             {2.3ex plus .2ex}{\Large\bf}}
+}
+\def\appendix#1{
+\stepcounter{section}
+%\def\thesection{\arabic{section}}
+\section*{\thesection \quad #1}
+\addcontentsline{toc}{subsection}{\numberline {\thesection}#1}
+\def\@currentlabel{{\bf 付録\thesection}}
+\setcounter{equation}{0}}
+
+\def\subappendix#1{
+\stepcounter{subsection}
+\subsection*{\thesubsection \quad #1}
+%\addcontentsline{toc}{subsection}{付録\thesubsection #1}
+\def\@currentlabel{{\bf 付録\thesubsection}}}
+%
+% 参考文献
+\def\thebibliography#1{\section*{\hfil 参 考 文 献\hfil}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+\addcontentsline{toc}{section}{参考文献}
+ \def\newblock{\hskip .11em plus .33em minus .07em}
+ \sloppy
+ \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+
+%Notation
+\def\Notation{
+\section*{\hfil 記~~~~~~号\hfil}
+\addcontentsline{toc}{section}{記号}}
+%
+%謝辞のページ
+\def\Acknowledgment{
+\section*{\hfil 謝~~~~~~辞\hfil}
+\addcontentsline{toc}{section}{謝辞}}
+%
+%概要のページ
+\def\abstract{
+\clearpage
+\begin{center}
+ \titlestr \\
+\end{center}
+\vspace*{2mm}
+\begin{center}
+ \rule{\linewidth}{0.05mm}
+\end{center}
+
+{\def\section{\@startsection {section}{1}{\z@}
+     {3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}{\Large\bf}}
+\section*{\hfil 概~~~~~~要\hfil}
+\addcontentsline{toc}{section}{概要}}
+}
+% 図・表・数式番号はsection毎にする
+\@addtoreset{equation}{section}           
+\def\theequation{\thesection.\arabic{equation}}
+\@addtoreset{figure}{section}%
+\def\thefigure{\thesection.\arabic{figure}}%
+\@addtoreset{table}{section}%
+\def\thetable{\thesection.\arabic{table}}%
+
+\newenvironment{proof}{\par (証明) \quad }{\hfill ■ \par\vspace{1zw}}
+%
+%theorem環境を作る
+\newcounter{theoryctr}[section]
+\newcounter{definitionctr}[section]
+\newcounter{remarkctr}[section]
+\newcounter{lemmactr}[section]
+\newcounter{coroctr}[section]
+\newcounter{propositionctr}[section]
+\newcounter{assumpctr}[section]
+\newcounter{housinctr}[section]
+\newcounter{propertyctr}[section]
+\newcounter{examplectr}[section]
+%
+\def\thetheoryctr{\thesection.\arabic{theoryctr}}
+\def\thedefinitionctr{\thesection.\arabic{definitionctr}}
+\def\theremarkctr{\thesection.\arabic{remarkctr}}
+\def\thelemmactr{\thesection.\arabic{lemmactr}}
+\def\thecoroctr{\thesection.\arabic{coroctr}}
+\def\thepropositionctr{\thesection.\arabic{propositionctr}}
+\def\theassumpctr{\thesection.\arabic{assumpctr}}
+\def\thehousinctr{\thesection.\arabic{housinctr}}
+\def\thepropertyctr{\thesection.\arabic{propertyctr}}
+%
+\def\theo{\stepcounter{theoryctr}\@ShowTheorem{定理}{\thetheoryctr}{}}
+\def\defi{\stepcounter{definitionctr}\def\theenumi{\roman{enumi}}\def\labelenumi{(\theenumi)}\@ShowTheorem{定義}{\thedefinitionctr}{の定義}}
+\def\remark{\stepcounter{remarkctr}\@ShowTheorem{注意}{\theremarkctr}{}}
+\def\lemm{\stepcounter{lemmactr}\@ShowTheorem{補題}{\thelemmactr}{}}
+\def\coro{\stepcounter{coroctr}\@ShowTheorem{系}{\thecoroctr}{}}
+\def\prop{\stepcounter{propositionctr}\@ShowTheorem{命題}{\thepropositionctr}{}}\def\pro{\stepcounter{propertyctr}\@ShowTheorem{性質}{\thepropertyctr}{}}
+\def\assumption{\stepcounter{assumpctr}\@ShowTheorem{仮定}{\theassumpctr}{}}
+\def\housin{\stepcounter{housinctr}\@ShowTheorem{方針}{\thehousinctr}{}}
+
+%
+\def\endtheo{\nopagebreak[4] \par \kern 2pt \hrule width \linewidth
+\kern 3pt \par\vspace{3mm}\pagebreak[2]} %終りの間隔
+\def\enddefi{\endtheo}
+\def\endremark{\endtheo}
+\def\endlemm{\endtheo}
+\def\endcoro{\endtheo}
+\def\endprop{\endtheo}
+\def\endpro{\endtheo}
+\def\endassumption{\endtheo}
+\def\endhousin{\endtheo}
+
+%
+\def\@ShowTheorem#1#2#3{\pagebreak[3]\@ifnextchar 
+[{\@tempswatrue\@ST@cite{#1}{#2}{#3}}{\@tempswafalse\@ST@nocite{#1}{#2}{#3}}}
+
+\def\@ST@cite#1#2#3[#4]{\@ifnextchar 
+({\@tempswatrue\@ST@citename{#1}{#2}{#3}{#4}}{\@tempswafalse\@ST@citenoname{#1}{#2}{#3}{#4}}}
+
+\def\@ST@citename#1#2#3#4(#5){\par\vspace{1zw}{\bf  ＜#1 #2\cite{#4}＞
+(#5)}\hrulefill\
+\par\nopagebreak[4] \def\@currentlabel{{\bf #1#2}}}
+\def\@ST@citenoname#1#2#3#4{\par\vspace{1zw}{\bf 【#1 #2\cite{#4}}】
+\hrulefill\
+\par\nopagebreak[4] \def\@currentlabel{{\bf #1#2}}}
+\def\@ST@nocite#1#2#3{\@ifnextchar 
+({\@tempswatrue\@ST@nocitename{#1}{#2}{#3}}{\@tempswafalse\@ST@nocitenoname{#1}{#2}{#3}}}
+
+\def\@ST@nocitename#1#2#3(#4){\par\vspace{1zw}{\bf ＜#1 #2＞
+(#4)}\hrulefill\
+\par\nopagebreak[4] \def\@currentlabel{{\bf #1#2}}}
+\def\@ST@nocitenoname#1#2#3{\par\vspace{1zw}{\bf 【#1 #2】}\hrulefill\
+\par\nopagebreak[4] \def\@currentlabel{{\bf #1#2}}}
+
+\def\bordermatrix#1{\begingroup \m@th
+  \setbox\z@\vbox{\def\cr{\crcr\noalign{\kern2\p@\global\let\cr\endline}}%
+    \ialign{$##$\hfil\kern2\p@\kern\p@renwd&\thinspace\hfil$##$\hfil
+      &&\quad\hfil$##$\hfil\crcr
+      \omit\strut\hfil\crcr\noalign{\kern-\baselineskip}%
+      #1\crcr\omit\strut\cr}}%
+  \setbox\tw@\vbox{\unvcopy\z@\global\setbox\@ne\lastbox}%
+  \setbox\tw@\hbox{\unhbox\@ne\unskip\global\setbox\@ne\lastbox}%
+  \setbox\tw@\hbox{$\kern\wd\@ne\kern-\p@renwd\left[\kern-\wd\@ne
+    \global\setbox\@ne\vbox{\box\@ne\kern2\p@}%
+    \vcenter{\kern-\ht\@ne\unvbox\z@\kern-\baselineskip}\,\right]$}%
+  \null\;\vbox{\kern\ht\@ne\box\tw@}\endgroup}
+
+
