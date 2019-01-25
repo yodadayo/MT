@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>param5.html</title>
+
+</head>
+
+<body>
+
+[WARNING] This document format requires a nonempty <title> element.
+  Please specify either 'title' or 'pagetitle' in the metadata,
+  e.g. by using --metadata pagetitle="..." on the command line.
+  Falling back to 'Untitled'
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Untitled</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h4 id="歩目出ている">2歩目出ている</h4>
+<!-- Muscle, Phase| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7  -->
+<!-- ------------- | --- | --- | --- | --- | --- | --- | --- | ---  -->
+<!-- \#0 | S | E | E | S | S | S | S | S  -->
+<!-- \#1 | S | S | E | E | S | S | S | S  -->
+<!-- \#2 | E | E | S | E | E | E | E | E  -->
+<!-- \#3 | S | S | S | S | S | E | E | S  -->
+<!-- \#4 | S | S | S | S | S | S | E | S  -->
+<!-- \#5 | E | E | E | E | E | S | S | E  -->
+<!-- \#6 | S | S | E | E | S | S | S | S  -->
+<!-- \#7 | S | S | S | S | S | S | E | E  -->
+<!-- Moter ID, Phase| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7  -->
+<!-- ------------- | --- | --- | --- | --- | --- | --- | --- | ---  -->
+<!-- \#1 | 15 | 0 | 30 | 30 | 0 | -10 | -20 | -10  -->
+<!-- \#2 | 15 | 20 | 30 | 0 | 0 | 0 | 30 | 30  -->
+<!-- \#3 | 0 | -10 | -10 | 0 | 0 | 0 | -40 | -15  -->
+<!-- \#4 | 0 | 10 | -45 | -35 | 0 | -10 | -10 | 10  -->
+<h4 id="前回との比較">前回との比較</h4>
+<pre><code>- </code></pre>
+<h4 id="改善点">改善点</h4>
+<ul>
+<li>1步目状態からのパラメータ</li>
+</ul>
+<p>uint16_t stance_v[V_NUM] = {S, S, E, S, S, E, S, S}; int16_t stance_m[ID_NUM] = {0, 0, 0, 0};</p>
+<p>int16_t firststep_m[ID_NUM][FIRST_PHASE] = // {deg, rpm} { { 15, 10, 40, 40, 0}, // RIGHT_PITCH { 10, 10, 10, 0, -10}, // LEFT_PITCH { 0, 0, 5, 5, 5}, // RIGHT_ROLL { 0, 0, -20, -20, -10} // LEFT_ROLL }; uint16_t firststep_v[8][FIRST_PHASE] = { {S, E, S, E, S}, // right front shin (0) {E, S, E, E, E}, // right back shin (1) {E, S, S, E, E}, // right back femur (2) {S, S, S, S, S}, // left front shin (3) {E, E, S, E, E}, // left back shin (4) {E, E, E, E, E}, // left back femur (5) {S, S, E, E, S}, // right front femur(6) {S, S, S, S, S} // left front femur (9) }; // if W_PHASE is 8</p>
+<p>int16_t mstep[ID_NUM][W_PHASE] = // {deg, rpm} { { 5, 10, 10, -10, 5, 10, 40, 40}, // RIGHT_PITCH { 5, 10, 40, 0, 5, 10, 10, -10}, // LEFT_PITCH { 5, 0, -20, -20, -5, 0, 5, 5}, // RIGHT_ROLL { -5, 0, 5, 10, 10, 0, -20, -20} // LEFT_ROLL }; // if W_PHASE is 8</p>
+<p>uint16_t vstep[8][W_PHASE] = { {S, S, S, S, S, E, S, E}, // right front shin (0) {E, E, S, E, E, S, E, E}, // right back shin (1) {E, E, E, E, E, E, S, E}, // right back femur (2) {S, E, S, E, S, S, S, S}, // left front shin (3) {E, S, E, S, S, E, S, E}, // left back shin (4) {E, E, S, E, E, E, E, E}, // left back femur (5) {S, S, S, S, S, S, E, E}, // right front femur(6) {S, S, E, E, S, S, S, S} // left front femur (9) }; // if W_PHASE is 8</p>
+</body>
+</html>
+
+</body>
+</html>

@@ -29,11 +29,10 @@ g++ -o ./MOTION ./MotionProgram.cpp ./lib/SlaveControlCommand.cpp ./lib/SPIM_Ras
 // Walking Setting
 #define W_PHASE 8
 
-// Running Setting
-#define R_PHASE 6
+#define SPEED 100 // default: 100
 
 // First Step From Standing
-#define FIRST_PHASE 5
+#define FIRST_PHASE 4
 
 // Moter 
 #define SERIAL_PORT "/dev/ttyUSB0"
@@ -88,78 +87,53 @@ uint16_t MoterTest[4] = {-20, 0, 20, 0};
 
 // // Parameter (left leg is frontward in the initial state)
 
-uint16_t vstep[8][W_PHASE] = { {S, E, E, S, S, S, S, S},
+uint16_t vstep[8][W_PHASE] = { {S, S, S, S, S, E, S, S},
 			      // right front shin (0)
-			       {S, S, E, E, S, S, S, S},
+			       {E, E, S, E, E, S, E, E},
 			      // right back shin (1)
-			       {E, E, S, E, E, E, E, E},
+			       {E, E, E, E, S, S, S, E},
 			      // right back femur (2)
-			       {S, S, S, S, S, E, E, S},
+			       {S, E, S, S, S, S, S, S},
 			      // left front shin (3)
-			       {S, S, S, S, S, S, E, S},
+			       {E, S, E, E, E, E, S, E},
 			      // left back shin (4)
-			       {E, E, E, E, E, S, S, E},
+			       {S, S, S, E, E, E, E, E},
 			      // left back femur (5)
-			       {S, S, E, E, S, S, S, S},
+			       {S, S, S, S, E, E, E, S},
 			      // right front femur(6)
-			       {S, S, S, S, S, S, E, E}
+			       {E, E, E, S, S, S, S, S}
 			      // left front femur (9)
 }; // if W_PHASE is 8
-// uint16_t vstep[8][W_PHASE] = { {480, E, S, S, S, 480, 480, 480, 480, 480},
-// 			      // right front shin (0)
-// 			       {S, S, E, E, S, S, S, S, S, S},
-// 			      // right back shin (1)
-// 			       {E, E, S, S, E, E, E, E, E, E},
-// 			      // right back femur (2)
-// 			       {480, 480, 480, 480, 480, 480, E, S, S, S},
-// 			      // left front shin (3)
-// 			       {S, S, S, S, S, S, S, E, E, S},
-// 			      // left back shin (4)
-// 			       {E, E, E, E, E, E, S, S, S, E},
-// 			      // left back femur (5)
-// 			       {S, S, E, E, S, S, S, S, S, S},
-// 			      // right front femur(6)
-// 			       {S, S, S, S, S, S, S, E, E, S}
-// 			      // left front femur (9)
-// }; // if W_PHASE is 10
 
 int16_t mstep[ID_NUM][W_PHASE] = // {deg, rpm}
-  { { 15, 0, 30, 30, 0, -10, -20, -10}, // RIGHT_PITCH
-    { 15, 20, 30, 0, 0, 0, 30, 30}, // LEFT_PITCH
-    { 0, -10, -10, 0, 0, 0, -40, -15}, // RIGHT_ROLL
-    { 0, 10, -45, -35, 0, -10, -10, 10} // LEFT_ROLL
+  { { 5, -3, -3, -3, 5, 10, 30, 30}, // RIGHT_PITCH
+    { 5, 10, 30, 30, 5, -3, -3, -3}, // LEFT_PITCH
+    { -5, -15, -25, -20, -5, 0, 5, 5}, // RIGHT_ROLL
+    { -5, 0, 5, 5, -5, -15, -25, -20} // LEFT_ROLL
   }; // if W_PHASE is 8
 
-// int16_t mstep[ID_NUM][W_PHASE] = // {deg, rpm}
-//   { { 0, 0, 15, 30, 15, 0, 0, 0, 0, 0}, // RIGHT_PITCH
-//     { 0, 0, 0, 0, 0, 0, 5, 15, 30, 15}, // LEFT_PITCH
-//     { 0, -5, 20, 10, 5, 0, 0, -30, -20, -10}, // RIGHT_ROLL
-//     { 0, 0, -30, -20, -10, 0, -5, 20, 10, 5}  // LEFT_ROLL
-//   }; // if W_PHASE is 10
-
-
 // First Step Parameter(Starting From Standing)
-int16_t firststep_m[ID_NUM][FIRST_PHASE] = // {deg, rpm}
-  { { 15, 0, 30, 30, 0}, // RIGHT_PITCH
-    { 15, 20, 30, 0, 0}, // LEFT_PITCH
-    { 0, -10, -10, 0, 0}, // RIGHT_ROLL
-    { 0, 10, -45, -35, 0} // LEFT_ROLL
+const int16_t firststep_m[ID_NUM][FIRST_PHASE] = // {deg, rpm}
+  { { 13, 30, 30, 30}, // RIGHT_PITCH
+    { 13, 10, 10, 0}, // LEFT_PITCH
+    { 0, 5, 5, 5}, // RIGHT_ROLL
+    { 0, -15, -15, -25} // LEFT_ROLL
   };
-uint16_t firststep_v[8][W_PHASE] = { {S, E, E, S, S},
+const uint16_t firststep_v[8][FIRST_PHASE] = { {S, E, S, S},
 			      // right front shin (0)
-			       {S, S, E, E, S},
+			       {E, S, E, E},
 			      // right back shin (1)
-			       {E, E, S, E, E},
+			       {E, S, S, E},
 			      // right back femur (2)
-			       {S, S, S, S, S},
+			       {S, S, S, S},
 			      // left front shin (3)
-			       {S, S, S, S, S},
+			       {E, E, S, E},
 			      // left back shin (4)
-			       {E, E, E, E, E},
+			       {E, E, E, E,,
 			      // left back femur (5)
-			       {S, S, E, E, S},
+			       {S, E, E, E},
 			      // right front femur(6)
-			       {S, S, S, S, S}
+			       {S, S, S, S}
 			      // left front femur (9)
 }; // if W_PHASE is 8
 uint8_t fs_flag = 1;
@@ -169,7 +143,7 @@ uint8_t fs_flag = 1;
 uint16_t stance_v[V_NUM] = {S, S, E, S, S, E, S, S};
 int16_t stance_m[ID_NUM] = {0, 0, 0, 0};
 
-
+uint16_t logtimer = 0;
 
 
 
@@ -222,20 +196,20 @@ void handler1(union sigval sv){
 	
 	if((i+1)%2 == 1){ // right leg
 	  if(cycle != 0)
-	    mWriteValue[i] = ((100 - w_cycle)*firststep_m[i][cycle - 1] + w_cycle*firststep_m[i][cycle])/100;
+	    mWriteValue[i] = ((SPEED - w_cycle)*firststep_m[i][cycle - 1] + w_cycle*firststep_m[i][cycle])/SPEED;
 	  else
-	    mWriteValue[i] = ((100 - w_cycle)*firststep_m[i][9] + w_cycle*firststep_m[i][cycle])/100;
+	    mWriteValue[i] = ((SPEED - w_cycle)*firststep_m[i][9] + w_cycle*firststep_m[i][cycle])/SPEED;
 	}
 	else{ // left leg
 	  if(cycle != 0)
-	    mWriteValue[i] = -((100 - w_cycle)*firststep_m[i][cycle - 1] + w_cycle*firststep_m[i][cycle])/100;
+	    mWriteValue[i] = -((SPEED - w_cycle)*firststep_m[i][cycle - 1] + w_cycle*firststep_m[i][cycle])/SPEED;
 	  else
-	    mWriteValue[i] = -((100 - w_cycle)*firststep_m[i][9] + w_cycle*firststep_m[i][cycle])/100;
+	    mWriteValue[i] = -((SPEED - w_cycle)*firststep_m[i][9] + w_cycle*firststep_m[i][cycle])/SPEED;
 	}
 	
       }
       
-      if(w_cycle / 100 > 0){
+      if(w_cycle / SPEED > 0){
 	
 	for(i = 0; i < V_NUM; i++){
 	  
@@ -246,7 +220,7 @@ void handler1(union sigval sv){
 	
 	w_cycle = 0; cycle++;
 	if(cycle > FIRST_PHASE - 1){
-	  cycle = 0; fs_flag = 0;
+	  cycle = 0; fs_flag = 0; logtimer++;
 	}
     
       }
@@ -260,20 +234,20 @@ void handler1(union sigval sv){
 	
 	if((i+1)%2 == 1){ // right leg
 	  if(cycle != 0)
-	    mWriteValue[i] = ((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][cycle])/100;
+	    mWriteValue[i] = ((SPEED - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][cycle])/SPEED;
 	  else
-	    mWriteValue[i] = ((100 - w_cycle)*mstep[i][9] + w_cycle*mstep[i][cycle])/100;
+	    mWriteValue[i] = ((SPEED - w_cycle)*mstep[i][9] + w_cycle*mstep[i][cycle])/SPEED;
 	}
 	else{ // left leg
 	  if(cycle != 0)
-	    mWriteValue[i] = -((100 - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][cycle])/100;
+	    mWriteValue[i] = -((SPEED - w_cycle)*mstep[i][cycle - 1] + w_cycle*mstep[i][cycle])/SPEED;
 	  else
-	    mWriteValue[i] = -((100 - w_cycle)*mstep[i][9] + w_cycle*mstep[i][cycle])/100;
+	    mWriteValue[i] = -((SPEED - w_cycle)*mstep[i][9] + w_cycle*mstep[i][cycle])/SPEED;
 	}
 	
       }
       
-      if(w_cycle / 100 > 0){
+      if(w_cycle / SPEED > 0){
 	
 	for(i = 0; i < V_NUM; i++){
 	  
@@ -283,7 +257,10 @@ void handler1(union sigval sv){
 	}
 	
 	w_cycle = 0; cycle++;
-	if(cycle > W_PHASE - 1) cycle = 0;
+	if(cycle > W_PHASE - 1){
+	  cycle = 0;
+	  logtimer++;
+	}
     
       }
       w_cycle++;
@@ -356,17 +333,17 @@ void handler100(union sigval sv){
       
     default:
       if(i != 7)
-	printf("TargetValvePressure %d >> %d\n", i, vtops(vWriteValue[i]));
+	printf("TargetValvePressure %d >> %d\n", i, pstov(vWriteValue[i]));
       else 
-	printf("TargetValvePressure 9 >> %d\n", vtops(vWriteValue[9]));
+	printf("TargetValvePressure 9 >> %d\n", pstov(vWriteValue[9]));
       break;
     }
   }
   for(int i = 0; i < V_NUM; i++)
     if(i != 7)
-      printf("ValvePressure %d >> %d\n", i, pstov(vReadValue[i]));
+      printf("ValvePressure %d >> %d\n", i, vtops(vReadValue[i]));
     else 
-      printf("ValvePressure 9 >> %d\n", pstov(vReadValue[9]));
+      printf("ValvePressure 9 >> %d\n", vtops(vReadValue[9]));
   printf("cycle >> %d\n", cycle);
   printf("---------------------\n\n");
 
@@ -450,6 +427,19 @@ int main(void){
   m.TorqueEnable(RIGHT_PITCH);
   m.TorqueEnable(LEFT_ROLL);
   m.TorqueEnable(LEFT_PITCH);
+
+  // Making Data File
+  std::ofstream log("Parameter.csv");
+  log << "\t";
+  for(i = 0; i < V_NUM; i++){
+      log << "Muscle" << i << "\t";
+  }
+  for(i = 0; i < ID_NUM; i++){
+    log << "Moter" << i+1;
+    if(i != ID_NUM - 1) log << "\t";
+    else log << "\n";
+  }
+  
   
   // Initial setting (if the mode is WALK)
 
@@ -469,8 +459,8 @@ int main(void){
       mWriteValue[i] = stance_m[i];
     
     // Safety constraints (Leave this uncommented!!)
-    if(mWriteValue[i] < -35) mWriteValue[i] = -35;
-    else if(35 < mWriteValue[i]) mWriteValue[i] = 35;
+    if(mWriteValue[i] < -40) mWriteValue[i] = -40;
+    else if(40 < mWriteValue[i]) mWriteValue[i] = 40;
     
   }
 
@@ -483,6 +473,46 @@ int main(void){
   printf("READY...\n\n\n");
   sleep(3);
   
+  //////
+  for(i = 0; i < V_NUM; i++){
+	
+    vWriteValue[i] = pstov(firststep_v[i][0]);
+    if(i == 7) vWriteValue[9] = pstov(firststep_v[i][0]);
+    
+  }
+  
+  for(i = 0; i < ID_NUM; i++){
+    
+    if(i%2 == 1){ // right leg
+      mWriteValue[i] = -firststep_m[i][0];
+    }
+    else // left leg
+      mWriteValue[i] = firststep_m[i][0];
+    
+    // Safety constraints (Leave this uncommented!!)
+    if(mWriteValue[i] < -40) mWriteValue[i] = -40;
+    else if(40 < mWriteValue[i]) mWriteValue[i] = 40;
+    
+  }
+
+  SCC.transfer_volume_all_analog(CS_VALVE);
+  
+  for(i = 0; i < ID_NUM; i++){
+    m.MovePosition(i+1, -mWriteValue[i]*4096/360+2048);
+  }
+  
+  for(i = 0; i < V_NUM; i++){
+    log << logtimer << "\t";
+    log << vReadValue[i];
+    if((i+1) % (V_NUM - 1) != 0) log << "\t";
+    else log << "\n";
+  }
+    
+  printf("READY...\n\n\n");
+  usleep(50*(SPEED/100)*1000);
+  //////
+
+  
   
   // start timer
   timerSetting();
@@ -491,13 +521,21 @@ int main(void){
     
     usleep(20*1000);
 	
-    // Safety constraints (Leave this uncommented!!)
-    if(mWriteValue[i] < -35) mWriteValue[i] = -35;
-    else if(35 < mWriteValue[i]) mWriteValue[i] = 35;
+    // Safety constraints for moters (Leave this uncommented!!)
+    if(mWriteValue[i] < -40) mWriteValue[i] = -40;
+    else if(40 < mWriteValue[i]) mWriteValue[i] = 40;
     
     for(i = 0; i < ID_NUM; i++){
       m.MovePosition(i+1, -mWriteValue[i]*4096/360+2048);
     }
+    
+    for(i = 0; i < V_NUM; i++){
+      log << vReadValue[i];
+      if((i+1) % (V_NUM - 1) != 0) log << "\t";
+      else log << "\n";
+    }
+
+    // if(logtimer > 1) break;
     
   }
 
@@ -505,6 +543,8 @@ int main(void){
   m.TorqueDisable(RIGHT_PITCH);
   m.TorqueDisable(LEFT_ROLL);
   m.TorqueDisable(LEFT_PITCH);
+
+  log.close();
   
   return 0;
   

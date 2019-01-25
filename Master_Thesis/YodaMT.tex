@@ -1,10 +1,15 @@
+%#BIBTEX pbibtex YodaMT
 \documentclass[12pt]{jarticle}
 \usepackage{amsmath,amssymb} 
 \usepackage[dvipdfmx]{graphicx,color} 
 \usepackage{Soturon_ptex}
 \usepackage{bm}
+\usepackage[hang,small,bf]{caption}
+\usepackage[subrefformat=parens]{subcaption}
+\captionsetup{compatibility=false}
 %\usepackage{slashbox}
 %\usepackage{comment}
+\renewcommand{\figurename}{Fig}
 
 \newcommand{\tenti}{{\rm T}}
 \setcounter{secnumdepth}{4}
@@ -15,6 +20,8 @@
 \author{世田 竜士}
 \supervisor{細田 耕 教授}
 \deadline{平成31年 1月 28日}
+
+
 %==================%
 
 \begin{document}
@@ -22,7 +29,9 @@
 % ===================タイトル======================
 \titlepage
 % ===================概要========================
-\input{abstruct.tex}
+\begin{abstract}
+ \input{abstruct.tex}
+\end{abstract}
 % ===================目次========================
 \tableofcontents
 % ===================本文========================
@@ -31,30 +40,35 @@
 \input{1introduction.tex}
 \clearpage
 
-\section{}
+\section{歩行・走行モデル}
+\input{2model.tex}
 \clearpage
 
-\section{}
+\section{２脚ロボット}
 \input{3robot.tex}
 \clearpage
 
-\section{}
+\section{実験}
+\input{4experiment.tex}
 \clearpage
 
-\section{}
+\section{結論}
+\input{5conclusion.tex}
 \clearpage
 
-\section{}
-\clearpage
-
-
-\section{}
-\clearpage
 
 
 \Acknowledgment
+\input{acknowledgment.tex}
 \clearpage
 
+\section*{研究業績}
+\addcontentsline{toc}{section}{研究業績}
+\subsection*{国内会議}
+\begin{itemize}
+ \item[\labelitemiv] 進寛史，世田竜士，池本周平，細田耕：”股関節と腰関節の連動機能を考慮した２足ロボットの開発”，ロボティクス・メカトロニクス講演会，2017．
+\end{itemize}
 \bibliographystyle{unsrt}
+\bibliography{reference}
 
 \end{document}

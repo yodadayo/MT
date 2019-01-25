@@ -252,7 +252,7 @@ namespace ssr {
        * @see CTimeOutException
        *
        */
-      static const int32_t DEFAULT_RESPONSE_TIME = 50;
+      static const int32_t DEFAULT_RESPONSE_TIME = 100;
       
       /** 
        * @if jp

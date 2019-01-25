@@ -1,0 +1,61 @@
+%#BIBTEX pbibtex YodaMT.tex
+@INPROCEEDINGS{pneumatbs, 
+author={K. Ogawa and K. Narioka and K. Hosoda}, 
+booktitle={2011 IEEE/RSJ International Conference on Intelligent Robots and Systems}, 
+title={Development of whole-body humanoid “pneumat-BS” with pneumatic musculoskeletal system}, 
+year={2011}, 
+volume={}, 
+number={}, 
+pages={4838-4843}, 
+keywords={Muscles;Robot kinematics;Pneumatic systems;Joints;Legged locomotion;Humans}, 
+doi={10.1109/IROS.2011.6095091}, 
+ISSN={2153-0866}, 
+month={Sep.},}
+
+@INPROCEEDINGS{pneumatbt, 
+author={K. Narioka and S. Tsugawa and K. Hosoda}, 
+booktitle={2009 IEEE/RSJ International Conference on Intelligent Robots and Systems}, 
+title={3D limit cycle walking of musculoskeletal humanoid robot with flat feet},
+year={2009}, 
+volume={}, 
+number={}, 
+pages={4676-4681}, 
+keywords={humanoid robots;legged locomotion;limit cycles;stability;limit cycle walking;musculoskeletal humanoid robot;flat feet;biped walker;circular roll-over shape;ankle joints;muscle tension;biped robot;ROS controlling method;stability;adaptive walking;Limit-cycles;Legged locomotion;Musculoskeletal system;Humanoid robots;Robot kinematics;Shape;Stability;Foot;Automatic control;Muscles}, 
+doi={10.1109/IROS.2009.5354388}, 
+ISSN={2153-0858}, 
+month={Oct},}
+
+@INPROCEEDINGS{athleterobot, 
+author={R. Niiyama and S. Nishikawa and Y. Kuniyoshi}, 
+booktitle={2010 10th IEEE-RAS International Conference on Humanoid Robots}, 
+title={Athlete Robot with applied human muscle activation patterns for bipedal running}, 
+year={2010}, 
+volume={}, 
+number={}, 
+pages={498-503}, \
+doi={10.1109/ICHR.2010.5686316}, 
+ISSN={2164-0572}, 
+month={Dec},}
+
+@article{osti_5606728,
+title = {Legged robots that balance},
+author = {Raibert, M.H.},
+abstractNote = {This book presents implications for theories of human motor control. The author describes the study of physical machines that run and balance on just one leg, including analysis, computer simulation, and laboratory experiments. He reveals that, contrary to expectations, control of such machines is not particularly difficult. He shows how the principles of locomotion with one leg can be extended to systems with several legs and reports preliminary experiments with a quadruped machine that runs using these principles.},
+doi = {},
+journal = {},
+number = ,
+volume = ,
+place = {United States},
+year = {1985},
+month = {1}
+}
+
+@article{doi:10.1152/ajpregu.1977.233.5.R243,
+author = {Cavagna, G. A. and Heglund, N. C. and Taylor, C. R.},
+title = {Mechanical work in terrestrial locomotion: two basic mechanisms for minimizing energy expenditure},
+journal = {American Journal of Physiology-Regulatory, Integrative and Comparative Physiology},
+volume = {233},
+number = {5},
+pages = {R243-R261},
+year = {1977},\
+}

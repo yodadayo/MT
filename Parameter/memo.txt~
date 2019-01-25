@@ -1,0 +1,53 @@
+uint16_t vstep[8][W_PHASE] = { {S, S, S, S, S, E, S, S},
+			      // right front shin (0)
+			       {E, E, S, E, E, S, E, E},
+			      // right back shin (1)
+			       {E, E, E, E, S, S, S, E},
+			      // right back femur (2)
+			       {S, E, S, S, S, S, S, S},
+			      // left front shin (3)
+			       {E, S, E, E, E, E, S, E},
+			      // left back shin (4)
+			       {S, S, S, E, E, E, E, E},
+			      // left back femur (5)
+			       {S, S, S, S, E, E, E, S},
+			      // right front femur(6)
+			       {E, E, E, S, S, S, S, S}
+			      // left front femur (9)
+}; // if W_PHASE is 8
+
+int16_t mstep[ID_NUM][W_PHASE] = // {deg, rpm}
+  { { 5, -2, -2, -2, 5, 30, 40, 30}, // RIGHT_PITCH
+    { 5, 10, 25, 20, 5, -5, -15, -20}, // LEFT_PITCH
+    { -5, -15, -25, -20, -5, 0, -5, -10}, // RIGHT_ROLL
+    { -5, 0, 5, 5, -5, -15, -25, -20} // LEFT_ROLL
+  }; // if W_PHASE is 8
+
+// First Step Parameter(Starting From Standing)
+const int16_t firststep_m[ID_NUM][FIRST_PHASE] = // {deg, rpm}
+  { { 15, 10, 40, 30, 0}, // RIGHT_PITCH
+    { 10, 10, 10, 0, -10}, // LEFT_PITCH
+    { 0, 0, 5, 5, 5}, // RIGHT_ROLL
+    { 0, 0, -15, -25, -20} // LEFT_ROLL
+  };
+const uint16_t firststep_v[8][FIRST_PHASE] = { {S, E, S, S, S},
+			      // right front shin (0)
+			       {E, S, E, E, E},
+			      // right back shin (1)
+			       {E, S, S, E, E},
+			      // right back femur (2)
+			       {S, S, S, S, S},
+			      // left front shin (3)
+			       {E, E, S, E, E},
+			      // left back shin (4)
+			       {E, E, E, E, E},
+			      // left back femur (5)
+			       {S, S, E, E, S},
+			      // right front femur(6)
+			       {S, S, S, S, S}
+			      // left front femur (9)
+}; // if W_PHASE is 8
+
+
+///////////////////
+

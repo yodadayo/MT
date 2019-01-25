@@ -1,0 +1,83 @@
+\begin{thebibliography}{10}
+
+\bibitem{pneumatbt}
+K.~Narioka, S.~Tsugawa, and K.~Hosoda.
+\newblock 3d limit cycle walking of musculoskeletal humanoid robot with flat
+  feet.
+\newblock In {\em 2009 IEEE/RSJ International Conference on Intelligent Robots
+  and Systems}, pages 4676--4681, Oct 2009.
+
+\bibitem{pneumatbs}
+K.~Ogawa, K.~Narioka, and K.~Hosoda.
+\newblock Development of whole-body humanoid “pneumat-bs” with pneumatic
+  musculoskeletal system.
+\newblock In {\em 2011 IEEE/RSJ International Conference on Intelligent Robots
+  and Systems}, pages 4838--4843, Sep. 2011.
+
+\bibitem{athleterobot}
+R.~Niiyama, S.~Nishikawa, and Y.~Kuniyoshi.
+\newblock Athlete robot with applied human muscle activation patterns for
+  bipedal running.
+\newblock In {\em 2010 10th IEEE-RAS International Conference on Humanoid
+  Robots}, pages 498--503, Dec 2010.
+
+\bibitem{Raibert:2000:LRB:518526}
+Marc Raibert.
+\newblock {\em Legged Robots That Balance}.
+\newblock MIT Press, Cambridge, MA, USA, 2000.
+
+\bibitem{McGeer:1990:PDW:83528.83533}
+Tad McGeer.
+\newblock Passive dynamic walking.
+\newblock {\em Int. J. Rob. Res.}, 9(2):62--82, March 1990.
+
+\bibitem{mobl}
+R~McN Alexander.
+\newblock Mechanics of bipedal locomotion.
+\newblock {\em Zoology}, pages 493--504, 1976.
+
+\bibitem{doi:10.1152/ajpregu.1977.233.5.R243}
+G.~A. Cavagna, N.~C. Heglund, and C.~R. Taylor.
+\newblock Mechanical work in terrestrial locomotion: two basic mechanisms for
+  minimizing energy expenditure.
+\newblock {\em American Journal of Physiology-Regulatory, Integrative and
+  Comparative Physiology}, pages 243--261, 1977.
+
+\bibitem{BLICKHAN19891217}
+R.~Blickhan.
+\newblock The spring-mass model for running and hopping.
+\newblock {\em Journal of Biomechanics}, pages 1217 -- 1227, 1989.
+
+\bibitem{doi:10.1098/rspb.2006.3637}
+Hartmut Geyer, Andre Seyfarth, and Reinhard Blickhan.
+\newblock Compliant leg behaviour explains basic dynamics of walking and
+  running.
+\newblock {\em Proceedings of the Royal Society B: Biological Sciences}, pages
+  2861--2867, 2006.
+
+\bibitem{doi:10.1163/156855303321165097}
+Shuuji Kajita, Fumio Kanehiro, Kenji Kaneko, Kiyoshi Fujiwara, Kazuhito Yokoi,
+  and Hirohisa Hirukawa.
+\newblock Biped walking pattern generation by a simple three-dimensional
+  inverted pendulum model.
+\newblock {\em Advanced Robotics}, pages 131--147, 2003.
+
+\bibitem{893174}
+F.~Asano, M.~Yamakita, and K.~Furuta.
+\newblock Virtual passive dynamic walking and energy-based control laws.
+\newblock In {\em Proceedings. 2000 IEEE/RSJ International Conference on
+  Intelligent Robots and Systems (IROS 2000)}, volume~2, pages 1149--1154
+  vol.2, Oct 2000.
+
+\bibitem{Seyfarth2547}
+Andr{\'e} Seyfarth, Hartmut Geyer, and Hugh Herr.
+\newblock Swing-leg retraction: a simple control model for stable running.
+\newblock {\em Journal of Experimental Biology}, 206(15):2547--2555, 2003.
+
+\bibitem{doi:10.1080/02681119708806242}
+Michael~J. Coleman, Anindya Chatterjee, and Andy Ruina.
+\newblock Motions of a rimless spoked wheel: a simple three-dimensional system
+  with impacts.
+\newblock {\em Dynamics and Stability of Systems}, pages 139--159, 1997.
+
+\end{thebibliography}

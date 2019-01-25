@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.8.0-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex 2018.7.31)  9 JAN 2019 14:09
+This is e-pTeX, Version 3.14159265-p3.8.0-180226-2.6 (utf8.euc) (TeX Live 2018) (preloaded format=platex 2018.7.31)  25 JAN 2019 12:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -157,67 +157,295 @@ Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
 \symboldmincho=\mathgroup10
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
 LaTeX Info: Redefining \bm on input line 207.
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2016/05/22 v1.7-166 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 67.
+\captionmargin=\dimen132
+\captionmargin@=\dimen133
+\captionwidth=\dimen134
+\caption@tempdima=\dimen135
+\caption@indent=\dimen136
+\caption@parindent=\dimen137
+\caption@hangindent=\dimen138
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
 )
-No file YodaMT.aux.
+
+Package caption Warning: Unsupported document class (or package) detected,
+(caption)                usage of the caption package is not recommended.
+See the caption package documentation for explanation.
+
+Package caption Info: \@makecaption = \long macro:#1#2->\vskip \abovecaptionski
+p \iftdir \sbox \@tempboxa {#1\hskip 1zw#2}\else \sbox \@tempboxa {#1: #2}\fi \
+ifdim \wd \@tempboxa >\hsize \iftdir #1\hskip 1zw#2\relax \par \else #1: #2\rel
+ax \par \fi \else \global \@minipagefalse \hb@xt@ \hsize {\hfil \box \@tempboxa
+ \hfil }\fi \vskip \belowcaptionskip .
+\c@ContinuedFloat=\count119
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2016/05/22 v1.1-161 Sub-captions (AR)
+\c@subfigure=\count120
+\c@subtable=\count121
+)
+(./YodaMT.aux)
 \openout1 = `YodaMT.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <24.88> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 23.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 30.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <24.88> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 23.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 30.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <17.28> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 23.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 30.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <17.28> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 23.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 30.
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <14.4> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 23.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 30.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <14.4> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 23.
-(./abstruct.tex) [0
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 30.
+ [0
 
-]
-No file YodaMT.toc.
+] (./abstruct.tex) [1
+
+] (./YodaMT.toc
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <12> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 1.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 1.
+LaTeX Font Info:    Try loading font information for U+msa on input line 4.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 4.
+
+(/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+))
 \tf@toc=\write3
 \openout3 = `YodaMT.toc'.
 
-[1] (./1introduction.tex) [2] [3
+ [2]
+(./1introduction.tex [3]) [4] (./2model.tex
+File: ./fig/inverted_pendulum_walking.png Graphic file (type bmp)
+<./fig/inverted_pendulum_walking.png>
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10.95> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 44.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10.95> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 44.
+File: ./fig/rw.png Graphic file (type bmp)
+<./fig/rw.png>
+ [5
 
-] [4
+] [6]
+File: ./fig/slip_running.png Graphic file (type bmp)
+<./fig/slip_running.png>
+ [7] [8]
+File: ./fig/leg_cylinder.png Graphic file (type bmp)
+<./fig/leg_cylinder.png>
+File: ./fig/leg_spring.png Graphic file (type bmp)
+<./fig/leg_spring.png>
 
-] [5
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 117--127
+[][] [] 
+ []
 
-] [6
+File: ./fig/leg_concept.png Graphic file (type bmp)
+<./fig/leg_concept.png>
+[9] [10]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 175.
 
-] [7
+ (/usr/local/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 175.
+File: ./fig/walking_with_vsl.png Graphic file (type bmp)
+<./fig/walking_with_vsl.png>
+File: ./fig/running_with_vsl.png Graphic file (type bmp)
+<./fig/running_with_vsl.png>
+File: ./fig/vsl_pattern.png Graphic file (type bmp)
+<./fig/vsl_pattern.png>
+ [11]
+[12]
+File: ./fig/dx0_5_walking.png Graphic file (type bmp)
+<./fig/dx0_5_walking.png>
+File: ./fig/dx2_0_running.png Graphic file (type bmp)
+<./fig/dx2_0_running.png>
+File: ./fig/trj_x2_5_dx1.png Graphic file (type bmp)
+<./fig/trj_x2_5_dx1.png>
+File: ./fig/trj_x2_5_dx2.png Graphic file (type bmp)
+<./fig/trj_x2_5_dx2.png>
 
-] [8
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 241--250
+[][] [] 
+ []
 
-] [9
+File: ./fig/Velocity_dx0_5walk.png Graphic file (type bmp)
+<./fig/Velocity_dx0_5walk.png>
+File: ./fig/Velocity_dx1walk.png Graphic file (type bmp)
+<./fig/Velocity_dx1walk.png>
 
-] (./YodaMT.aux) ) 
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 255--265
+[][] [] 
+ []
+
+File: ./fig/Velocity_dx1_5run.png Graphic file (type bmp)
+<./fig/Velocity_dx1_5run.png>
+File: ./fig/Velocity_dx2run.png Graphic file (type bmp)
+<./fig/Velocity_dx2run.png>
+
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 266--276
+[][] [] 
+ []
+
+) [13] [14] [15] (./3robot.tex
+File: ./fig/robot.JPG Graphic file (type bmp)
+<./fig/robot.JPG>
+File: ./fig/dynamixel.JPG Graphic file (type bmp)
+<./fig/dynamixel.JPG>
+File: ./fig/McKibben.png Graphic file (type bmp)
+<./fig/McKibben.png>
+
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 22--32
+[][] [] 
+ []
+
+File: ./fig/valve.JPG Graphic file (type bmp)
+<./fig/valve.JPG>
+File: ./fig/pair_high.png Graphic file (type bmp)
+<./fig/pair_high.png>
+File: ./fig/pair_low.png Graphic file (type bmp)
+<./fig/pair_low.png>
+
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 51--59
+[][] [] 
+ []
+
+[16
+
+] [17] [18]
+File: ./fig/robot_cad_muscle.png Graphic file (type bmp)
+<./fig/robot_cad_muscle.png>
+ [19]
+File: ./fig/raspi3.png Graphic file (type bmp)
+<./fig/raspi3.png>
+File: ./fig/raspi3_board.png Graphic file (type bmp)
+<./fig/raspi3_board.png>
+File: ./fig/arduinodue.png Graphic file (type bmp)
+<./fig/arduinodue.png>
+File: ./fig/arduino_board.png Graphic file (type bmp)
+<./fig/arduino_board.png>
+File: ./fig/u2d2.png Graphic file (type bmp)
+<./fig/u2d2.png>
+File: ./fig/system.png Graphic file (type bmp)
+<./fig/system.png>
+
+
+LaTeX Warning: Reference `psensor' on page 20 undefined on input line 138.
+
+[20]
+File: ./fig/l_ankle_5deg.png Graphic file (type bmp)
+<./fig/l_ankle_5deg.png>
+
+Overfull \hbox (21.33957pt too wide) in paragraph at lines 149--150
+ [][] 
+ []
+
+File: ./fig/r_ankle_5deg.png Graphic file (type bmp)
+<./fig/r_ankle_5deg.png>
+
+Overfull \hbox (21.33957pt too wide) in paragraph at lines 154--155
+ [][] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 147--157
+[][] [] 
+ []
+
+File: ./fig/l_knee_5deg.png Graphic file (type bmp)
+<./fig/l_knee_5deg.png>
+
+Overfull \hbox (21.33957pt too wide) in paragraph at lines 160--161
+ [][] 
+ []
+
+File: ./fig/r_knee_5deg.png Graphic file (type bmp)
+<./fig/r_knee_5deg.png>
+
+Overfull \hbox (21.33957pt too wide) in paragraph at lines 165--166
+ [][] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) in paragraph at lines 158--168
+[][] [] 
+ []
+
+) [21] [22] (./4experiment.tex [23
+
+]
+File: ./fig/parameter_pattern.png Graphic file (type bmp)
+<./fig/parameter_pattern.png>
+
+
+LaTeX Warning: Reference `' on page 24 undefined on input line 58.
+
+File: ./fig/robot.png Graphic file (type bmp)
+<./fig/robot.png>
+File: ./fig/robot.png Graphic file (type bmp)
+<./fig/robot.png>
+) [24] [25] [26] [27] (./5conclusion.tex) [28
+
+] [29] (./acknowledgment.tex)
+[30
+
+] (./YodaMT.bbl [31
+
+]
+
+LaTeX Font Warning: Font shape `JT1/gt/m/it' undefined
+(Font)              using `JT1/gt/m/n' instead on input line 7.
+
+
+LaTeX Font Warning: Font shape `JY1/gt/m/it' undefined
+(Font)              using `JY1/gt/m/n' instead on input line 7.
+
+[32]) [33] (./YodaMT.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 1816 strings out of 493281
- 21421 string characters out of 6145041
- 88223 words of memory out of 5000000
- 5767 multiletter control sequences out of 15000+600000
- 13166 words of font info for 53 fonts, out of 8000000 for 9000
+ 3248 strings out of 493281
+ 46884 string characters out of 6145041
+ 125576 words of memory out of 5000000
+ 7093 multiletter control sequences out of 15000+600000
+ 23259 words of font info for 90 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 27i,5n,27p,239b,180s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,15n,39p,914b,596s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on YodaMT.dvi (10 pages, 3256 bytes).
+Output written on YodaMT.dvi (34 pages, 84028 bytes).
